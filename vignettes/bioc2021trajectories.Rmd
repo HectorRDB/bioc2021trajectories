@@ -1,0 +1,103 @@
+---
+title: "Trajectory inference across conditions"
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: true
+    toc_depth: 3
+    fig_width: 5
+#bibliography: "`r system.file(package='bioc2021trajectories', 'vignettes', 'bibliography.bib')`"
+vignette: >
+  %\VignetteIndexEntry{bioc2021trajectories}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding[utf8]{inputenc}
+---
+
+# Overview
+
+## Instructor(s) name(s) and contact information
+
+ - Hector Roux de Bézieux (hector.rouxdebezieux@berkeley.edu)
+ - Kelly Street (kstreet@ds.dfci.harvard.edu)
+ - Koen Van den Berge (koenvdberge@berkeley.edu)
+ 
+## Workshop Description
+
+In single-cell RNA-sequencing (scRNA-seq), gene expression is assessed at the level of single cells. In dynamic biological systems, it may not be appropriate to assign cells to discrete groups, but rather a continuum of cell states may be observed, e.g. the differentiation of a stem cell population into mature cell types. This is often represented as a trajectory in a reduced dimension of the scRNA-seq dataset.
+
+Many methods have been suggested for trajectory inference. However, in this setting, it is often unclear how one should handle multiple biological groups or conditions, e.g. constructing and comparing the differentiation trajectory of a wild type versus a knock-out stem cell population.
+
+In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We will expand on our recent package [condiments](https://bioconductor.org/packages/devel/bioc/html/condiments.html) and present the workflow on two examples. 
+
+In both cases, we follow the same three steps:
++ We start by integrating datasets from multiple conditions and then check that we can fit a single trajectory, which we call **differential topology**.
++ By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of **differential progression**. 
++ We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as **differential expression**.
+
+## Pre-requisites
+
+Software:
+
+* Basic knowledge of _R_ syntax
+* Familiarity with single-cell RNA-sequencing
+* Familiarity with the `SingleCellExperiment` class
+
+Background reading:
+
+* The textbook "Orchestrating Single-Cell Analysis with Bioconductor" is a great reference for single-cell analysis using Bioconductor packages.
+* The data used in this vignette was originally published in [McFaline-Figueroa, et al.](https://www.nature.com/articles/s41588-019-0489-5) "A pooled single-cell genetic screen identifies regulatory checkpoints in the continuum of the epithelial-to-mesenchymal transition."
+* [Slingshot paper](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4772-0)
+* [tradeSeq paper](https://www.nature.com/articles/s41467-020-14766-3)
+
+
+## Workshop Participation
+
+The workshop will start with an introduction to the problem and the first dataset using [presentation slides](). Following this, we will have a [lab session on the first dataset](). Time permitting, we will then look at [a second dataset](). 
+
+## _R_ / _Bioconductor_ packages used
+
+* The workshop will focus on Bioconductor packages [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html), [Slingshot](https://bioconductor.org/packages/release/bioc/html/slingshot.html), [tradeSeq](https://bioconductor.org/packages/release/bioc/html/tradeSeq.html) and [condiments](https://bioconductor.org/packages/devel/bioc/html/condiments.html).
+
+### Time outline
+
+| Activity                     | Time |
+|------------------------------|------|
+| Introduction                     | 10m  |
+| Data Integration   | 5m  |
+| Trajectory Inference and Differential Topology   | 10m  |
+| Differential Progression                    | 10m  |
+| Differential Expression          | 15m  |
+| Wrap-up and Conclusions          | 10m  |
+
+## Workshop goals and objectives
+
+Participants will learn how to reason about trajectories in single-cell RNA-seq data and how they may be used for interpretation of complex scRNA-seq datasets. Participants can follow along in the following fashions:
+
++ Run the code online by going to [orchestra](http://app.orchestra.cancerdatasci.org/1) and launching the workshop titled __Trajectory inference across conditions: differential expression and differential progression__
++ Clone the [repository](https://github.com/kstreet13/bioc2020trajectories) from github and run the code locally
++ USe docker and get the container kstreet13/bioc2020trajectories:latest
+
+## Learning goals
+
+* Reason about dynamic biological systems.
+* Grasp the complexity of analyzing large scRNA-seq datasets with the goal of extracting relevant biological information.
+* Understand the concepts of differential progression and differential expression along a trajectory path.
+
+## Learning objectives
+
+* Learn how to analyze single-cell RNA-seq data using Bioconductor packages.
+* Import and explore large scRNA-seq datasets.
+* Understand the challenges of trajectory inference.
+* Compose analysis pipeline that allows interpretation of complex scRNA-seq datasets.
+* Assess the added complexity of handling multiple conditions in these dynamic systems and how it influences the analysis pipeline.
+* Discuss how the analysis pipeline can incorporate this change and evaluate it.
+
+# Final notes
+
+A compiled version of the vignette is available on the [workshop website](https://kstreet13.github.io/bioc2020trajectories/articles/workshopTrajectories.html).
+
+If you have questions that you could not ask during the workshop, feel free to open an issue on the github repository [here](https://github.com/kstreet13/bioc2020trajectories/issues).
+
+```{r}
+sessionInfo()
+```

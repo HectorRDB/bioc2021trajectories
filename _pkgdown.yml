@@ -1,4 +1,4 @@
-url: https://kstreet13.github.io/bioc2020trajectories
+url: https://hectorrdb.github.io/bioc2021trajectories
 
 template:
   params:
@@ -12,6 +12,6 @@ home:
 navbar:
   right:
    - icon: fa-github
-     href: https://github.com/kstreet13/bioc2020trajectories
+     href: https://github.com/HectorRDB/bioc2021trajectories
      
 

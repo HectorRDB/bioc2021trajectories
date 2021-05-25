@@ -2,6 +2,7 @@
 
 [![.github/workflows/basic_checks.yaml](https://github.com/hectorrdb/bioc2021trajectories/workflows/.github/workflows/basic_checks.yaml/badge.svg)](https://github.com/hectorrdb/bioc2021trajectories/actions)
 
+<img src='man/figures/logo.png' align="right" height="138.5"/>
 
 # Instructors
 
