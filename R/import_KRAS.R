@@ -83,6 +83,7 @@
 #' @export
 #' @import stringr dplyr readr DropletUtils SingleCellExperiment GEOquery
 #' @importFrom openxlsx read.xlsx
+#' @importFrom Matrix Matrix
 import_KRAS <- function() {
   # Get count and logcount matrices ----
   raw <- GEOquery::getGEOSuppFiles("GSE137912", baseDir = tempdir(),

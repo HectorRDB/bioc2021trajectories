@@ -3,14 +3,26 @@
 \docType{data}
 \name{tgfb}
 \alias{tgfb}
-\title{The object}
+\title{A \link[SingleCellExperiment]{SingleCellExperiment} object}
 \format{
-Can be re-obtained by runing first chunk of the vignette.
+An object of class \code{SingleCellExperiment} with 10549 rows and 9268 columns.
+}
+\source{
+See the TGFB vignette to generate this data
 }
 \usage{
 data(tgfb)
 }
 \description{
-A \code{\link{SingleCellExperiment}} object of 9268 cells, derived from [McFaline-Figueroa, et al.](https://www.nature.com/articles/s41588-019-0489-5)
+This dataset contains all the information used for the TGFB case studies
+}
+\details{
+#' @references
+Jos\'{e}  L.  McFaline-Figueroa,  Andrew  J.  Hill,  Xiaojie  Qiu,
+Dana  Jackson,  Jay  Shendure,  and  Cole Trapnell.
+*A pooled single-cell genetic screen identifies regulatory checkpoints in *
+*the continuum of the epithelial-to-mesenchymal transition.*
+Nature Genetics, 51(9):1389–1398, sep 2019.  ISSN 15461718.
+doi:  10.1038/s41588-019-0489-5.
 }
 \keyword{datasets}

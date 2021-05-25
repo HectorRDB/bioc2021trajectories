@@ -86,7 +86,8 @@ kras <- slingshot(kras, reducedDim = "TSNE", clusterLabels = kras$Cluster,
 
 ## Topology Test
 
-```{r}
+```{r, eval = FALSE}
+set.seed(23)
 topologyTest(kras, conditions = "Batch", rep = 50)
 ```
 

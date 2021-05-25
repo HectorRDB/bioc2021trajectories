@@ -8,14 +8,19 @@ output:
     fig_width: 5
 #bibliography: "`r system.file(package='bioc2021trajectories', 'vignettes', 'bibliography.bib')`"
 vignette: >
-  %\VignetteIndexEntry{bioc2021trajectories}
+  %\VignetteIndexEntry{Analysis of the TGFB dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding[utf8]{inputenc}
 ---
 
 # Overview
 
-This dataset 
+We will follow the 3-steps workflow of the `condiments` package:
+
++ We start by integrating datasets from multiple conditions and then check that we can fit a single trajectory, which we call **differential topology**.
++ By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of **differential progression**. 
++ We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as **differential expression**.
+
 
 ```{r}
 suppressPackageStartupMessages({
@@ -26,8 +31,7 @@ suppressPackageStartupMessages({
   library(pheatmap); library(msigdbr)
   library(fgsea); library(knitr)
   library(ggplot2); library(gridExtra)
-  library(tradeSeq);library(cowplot)
-library(scales)
+  library(tradeSeq); library(cowplot)
 })
 theme_set(theme_classic())
 ```
@@ -101,7 +105,6 @@ Once the two datasets have been integrated, we can visualize all the single cell
 
 We also visualize the distribution of cells in this space according to the treatment (control and TGFB) and spatial location (inner cells versus outer cells).
 
-
 ```{r compute scores}
 df <- bind_cols(
   as.data.frame(reducedDims(tgfb)$UMAP),
@@ -156,7 +159,7 @@ ggplot(df, aes(x = UMAP_1, y = UMAP_2, col = spatial_id)) +
   geom_point(data = mst, aes(col = Cluster), size = 5)
 ```
 
-```{r}
+```{r, eval = FALSE}
 set.seed(100)
 topologyTest(tgfb, conditions = tgfb$treatment_id, rep = 100)
 ```
@@ -230,7 +233,7 @@ icMat <- evaluateK(counts = as.matrix(assays(tgfb)$counts),
 ```
 
 ```{r, echo=FALSE}
-knitr::include_graphics("../data/evaluateKResult.png")
+knitr::include_graphics("../man/figures/evaluateKResult.png")
 ```
 
 The plot above shows the graphical output from running `evaluateK`. The left panel shows the distribution of gene-level AIC values as compared to their average AIC over the range of `k`. The second and third panel plot the average AIC and relative AIC with respect to the lowest value of `k` (i.e., 3), respectively, as a function of `k`. Finally, the right panel plots the number of genes whose AIC is lowest at a particular value of `k`.

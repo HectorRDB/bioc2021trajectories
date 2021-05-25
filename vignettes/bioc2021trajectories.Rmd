@@ -6,7 +6,6 @@ output:
     toc: true
     toc_depth: 3
     fig_width: 5
-#bibliography: "`r system.file(package='bioc2021trajectories', 'vignettes', 'bibliography.bib')`"
 vignette: >
   %\VignetteIndexEntry{bioc2021trajectories}
   %\VignetteEngine{knitr::rmarkdown}
@@ -29,10 +28,10 @@ Many methods have been suggested for trajectory inference. However, in this sett
 
 In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We will expand on our recent package [condiments](https://bioconductor.org/packages/devel/bioc/html/condiments.html) and present the workflow on two examples. 
 
-In both cases, we follow the same three steps:
-+ We start by integrating datasets from multiple conditions and then check that we can fit a single trajectory, which we call **differential topology**.
-+ By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of **differential progression**. 
-+ We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as **differential expression**.
++ We will first present a single-lineage trajectory dataset with two conditions, and conduct a full workflow analysis on that dataset, from integration to differential expression.
+
++ We will then analyze a more complex dataset.
+
 
 ## Pre-requisites
 
@@ -52,7 +51,7 @@ Background reading:
 
 ## Workshop Participation
 
-The workshop will start with an introduction to the problem and the first dataset using [presentation slides](). Following this, we will have a [lab session on the first dataset](). Time permitting, we will then look at [a second dataset](). 
+The workshop will start with an introduction to the problem and the first dataset using [presentation slides](). Following this, we will have a [lab session on the first dataset](https://hectorrdb.github.io/bioc2021trajectories/articles/TGFB.html). Time permitting, we will then look at [a second dataset](https://hectorrdb.github.io/bioc2021trajectories/articles/KRAS.html).
 
 ## _R_ / _Bioconductor_ packages used
 
@@ -74,7 +73,7 @@ The workshop will start with an introduction to the problem and the first datase
 Participants will learn how to reason about trajectories in single-cell RNA-seq data and how they may be used for interpretation of complex scRNA-seq datasets. Participants can follow along in the following fashions:
 
 + Run the code online by going to [orchestra](http://app.orchestra.cancerdatasci.org/1) and launching the workshop titled __Trajectory inference across conditions: differential expression and differential progression__
-+ Clone the [repository](https://github.com/kstreet13/bioc2020trajectories) from github and run the code locally
++ Clone the [repository](https://github.com/hectorrdb/bioc2021trajectories) from github and run the code locally
 + USe docker and get the container kstreet13/bioc2020trajectories:latest
 
 ## Learning goals
@@ -94,9 +93,9 @@ Participants will learn how to reason about trajectories in single-cell RNA-seq 
 
 # Final notes
 
-A compiled version of the vignette is available on the [workshop website](https://kstreet13.github.io/bioc2020trajectories/articles/workshopTrajectories.html).
+A compiled version of the vignette is available on the [workshop website](https://hectorrdb.github.io/bioc2021trajectories/articles/bioc2021trajectories.html).
 
-If you have questions that you could not ask during the workshop, feel free to open an issue on the github repository [here](https://github.com/kstreet13/bioc2020trajectories/issues).
+If you have questions that you could not ask during the workshop, feel free to open an issue on the github repository [here](https://github.com/hectorrdb/bioc2021trajectories/issues).
 
 ```{r}
 sessionInfo()

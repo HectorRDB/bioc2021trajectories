@@ -11,33 +11,36 @@ Description: Repository for the Bioc2021 workshop.
 Depends: R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: bzip2
 License: CC BY 4.0  + file LICENSE
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     RColorBrewer,
     rmarkdown,
-    scales,
     pkgdown,
     viridis,
     ggplot2,
+    condiments,
+    scales,
     UpSetR,
+    gridExtra,
     pheatmap,
     msigdbr,
+    magrittr,
     fgsea,
-    gridExtra,
+    cowplot,
     tradeSeq
 Imports: 
-    BiocFileCache,
     slingshot,
-    rappdirs,
+    GEOquery,
+    Matrix,
     SingleCellExperiment,
-    HDF5Array,
-    igraph,
-    RANN,
-    magrittr,
-    mgcv,
-    purrr
+    stringr,
+    dplyr,
+    readr,
+    DropletUtils,
+    openxlsx
 VignetteBuilder: knitr
 URL: https://hectorrdb.github.io//bioc2021trajectories
 DockerImage: hectorrdb/bioc2021trajectories:latest
