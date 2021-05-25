@@ -1,0 +1,17 @@
+url: https://kstreet13.github.io/bioc2020trajectories
+
+template:
+  params:
+    bootswatch: flatly
+
+home:
+  title: "bioctrajectories2020"
+  type: inverse
+
+
+navbar:
+  right:
+   - icon: fa-github
+     href: https://github.com/kstreet13/bioc2020trajectories
+     
+
