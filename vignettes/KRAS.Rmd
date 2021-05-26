@@ -20,7 +20,7 @@ The dataset we will be working with concerns a single-cell RNA-sequencing datase
 ```{r}
 libs <- c("here", "dplyr", "tradeSeq", "SingleCellExperiment", "slingshot",
            "condiments", "scater", "RColorBrewer", "pheatmap", "cowplot",
-          "tidyr")
+          "tidyr", "ggplot2")
 suppressMessages(
   suppressWarnings(sapply(libs, require, character.only = TRUE))
 )
