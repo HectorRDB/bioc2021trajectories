@@ -130,6 +130,5 @@ import_KRAS <- function() {
                               rowData = genemeta, colData = DataFrame(colD))
   sce$Cluster <- as.character(sce$Cluster)
   reducedDim(sce, "TSNE") <- colData(sce)[, c("tSNE1", "tSNE2")] %>% as.matrix()
-  sce <- sce[1:100, ]
   return(sce)
 }

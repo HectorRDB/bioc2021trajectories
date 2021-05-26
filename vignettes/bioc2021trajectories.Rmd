@@ -28,9 +28,9 @@ Many methods have been suggested for trajectory inference. However, in this sett
 
 In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We will expand on our recent package [condiments](https://bioconductor.org/packages/devel/bioc/html/condiments.html) and present the workflow on two examples. 
 
-+ We will first present a single-lineage trajectory dataset with two conditions, and conduct a full workflow analysis on that dataset, from integration to differential expression.
+We will first present a _single-lineage trajectory dataset with two conditions_ which we call **TGFB**, and conduct a full workflow analysis on that dataset, from integration to differential expression. You can find the compiled version of that vignette [here]().
 
-+ We will then analyze a more complex dataset.
++ We will then analyze a more complex dataset, with _three lineages and three conditions_, which we name **KRAS** and explore how the first few steps of the workflow differ. You can find the compiled version of that vignette [here]().
 
 
 ## Pre-requisites
@@ -44,9 +44,11 @@ Software:
 Background reading:
 
 * The textbook "Orchestrating Single-Cell Analysis with Bioconductor" is a great reference for single-cell analysis using Bioconductor packages.
-* The data used in this vignette was originally published in [McFaline-Figueroa, et al.](https://www.nature.com/articles/s41588-019-0489-5) "A pooled single-cell genetic screen identifies regulatory checkpoints in the continuum of the epithelial-to-mesenchymal transition."
+* The first dataset used in this workshop was originally published in [McFaline-Figueroa, et al.](https://www.nature.com/articles/s41588-019-0489-5) "A pooled single-cell genetic screen identifies regulatory checkpoints in the continuum of the epithelial-to-mesenchymal transition."
+* The second dataset used in this workshop in [Xue, et al.](https://doi.org/10.1038/s41586-019-1884-x) "Rapid non-uniform adaptation to conformation-specific KRAS(G12C) inhibition"
 * [Slingshot paper](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4772-0)
 * [tradeSeq paper](https://www.nature.com/articles/s41467-020-14766-3)
+* [condiments paper](https://www.biorxiv.org/content/10.1101/2021.03.09.433671v1)
 
 
 ## Workshop Participation
@@ -62,11 +64,13 @@ The workshop will start with an introduction to the problem and the first datase
 | Activity                     | Time |
 |------------------------------|------|
 | Introduction                     | 10m  |
-| Data Integration   | 5m  |
-| Trajectory Inference and Differential Topology   | 10m  |
-| Differential Progression                    | 10m  |
-| Differential Expression          | 15m  |
-| Wrap-up and Conclusions          | 10m  |
+| TGFB: Data Integration   | 5m  |
+| TGFB: Trajectory Inference and Differential Topology   | 10m  |
+| TGFB: Differential Progression                    | 5m  |
+| TGFB: Differential Expression          | 10m  |
+| KRAS: Trajectory Inference and Differential Topology   | 10m  |
+| KRAS: Differential Progression and Differentiation     | 5m  |
+| Wrap-up and Conclusions          | 5m  |
 
 ## Workshop goals and objectives
 
@@ -74,7 +78,7 @@ Participants will learn how to reason about trajectories in single-cell RNA-seq 
 
 + Run the code online by going to [orchestra](http://app.orchestra.cancerdatasci.org/1) and launching the workshop titled __Trajectory inference across conditions: differential expression and differential progression__
 + Clone the [repository](https://github.com/hectorrdb/bioc2021trajectories) from github and run the code locally
-+ USe docker and get the container kstreet13/bioc2020trajectories:latest
++ USe docker and get the container hectorrdb/bioc2021trajectories:latest
 
 ## Learning goals
 

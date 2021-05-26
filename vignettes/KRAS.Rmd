@@ -12,7 +12,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+# Overview
 
+The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a  KRAS(G12C) inhibition [@Xue2020]. Those types of molecules are currently in early-phase clinical trials and a large group of lung adenocarcinoma seem to be able to at least partially evade those treatments. The authors of the original study therefore look at the impact of KRAS(G12C) inhibitors on three models of tumors and show that cells evolve along three lineages.
+
+While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three models).
+
+We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting.
++ We first check if we can fit a single trajectory, which we call **differential topology**.
++ We then look for large-scale changes, indicative of **differential progression** and **differential differentiation**. 
 # Load data
 
 ```{r}
@@ -22,7 +30,6 @@ opts_chunk$set(
 )
 ```
 
-The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a  KRAS(G12C) inhibition [@Xue2020].
 
 ```{r}
 libs <- c("here", "dplyr", "tradeSeq", "SingleCellExperiment", "slingshot",
@@ -35,9 +42,13 @@ rm(libs)
 theme_set(theme_classic())
 ```
 
+
 ```{r, eval = FALSE}
 kras <- bioc2021trajectories::import_KRAS()
+kras <- kras[1:100, ]
 ```
+
+We rely on normalization conducted in the original paper, and will used the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object. 
 
 ```{r}
 data("kras", package = "bioc2021trajectories")
@@ -46,7 +57,7 @@ kras
 
 # EDA
 
-Reduced dimension coordinates are obtained from the original publication.
+We can visualize all the single cells in a shared reduced dimensional space, according to the tumor model or the clusters from the original publication.
 
 ```{r}
 cols <- c(brewer.pal(5, "Blues")[2:5],
@@ -70,6 +81,7 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, fill = Cluster)) +
 ```
 
 # Imbalance score
+
 
 ```{r}
 kras <- imbalance_score(Object = kras, conditions = "Batch", dimred = "TSNE")
