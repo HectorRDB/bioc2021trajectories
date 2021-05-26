@@ -15,6 +15,13 @@ vignette: >
 
 # Load data
 
+```{r}
+library(knitr)
+opts_chunk$set(
+  eval = FALSE
+)
+```
+
 The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a  KRAS(G12C) inhibition [@Xue2020].
 
 ```{r}

@@ -21,6 +21,12 @@ We will follow the 3-steps workflow of the `condiments` package:
 + By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of **differential progression**. 
 + We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as **differential expression**.
 
+```{r}
+library(knitr)
+opts_chunk$set(
+  eval = FALSE
+)
+```
 
 ```{r}
 suppressPackageStartupMessages({
