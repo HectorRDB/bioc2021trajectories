@@ -1,6 +1,6 @@
 Package: bioc2021trajectories
 Title: Trajectory inference across conditions: differential expression and differential progression
-Version: 0.0.0.93
+Version: 0.0.1
 Authors@R: c(person("Kelly", "Street", role = c("aut"),
                      email = "kstreet@ds.dfci.harvard.edu"),
               person("Koen", "Van den Berge", role = c("aut"),
@@ -39,6 +39,7 @@ Imports:
     stringr,
     dplyr,
     readr,
+    matrixStats,
     DropletUtils,
     openxlsx
 VignetteBuilder: knitr

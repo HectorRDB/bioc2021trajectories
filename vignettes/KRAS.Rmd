@@ -201,6 +201,7 @@ sds <- merge_sds(sdss[[1]], sdss[[2]], sdss[[3]],
 Similarly to the TGFB dataset, we can look at large-scale differences between conditions. Specifically, we want to see if the pseudotime distributions are similar across conditions.
 
 ## Plot
+
 ```{r}
 df <- full_join(
   df %>% 
@@ -239,32 +240,43 @@ progressionTest(sds, conditions = kras$Batch, lineages = TRUE)
 
 # Differential Differentiation
 
+Each cell in a trajectory is characterized with two components: its pseudotime values in each lineage, and its weights with regard to each lineage. Differential progression looks at the distribution of pseudotime between conditions while differential differentiation looks at the distribution of weights values between conditions. 
 
-
-## Test
-
-```{r}
-differentiationTest(sds, conditions = kras$Batch, pairwise = TRUE)
-```
+It is slightly harder to interpret bu we can start with a few plots.
 
 ## Plot
 
 ```{r}
-weights <- condiments:::.sling_reassign(sds)
-df <- df %>%
-  full_join(weights %>% 
-              as.data.frame() %>%
-              mutate(cells = rownames(.)) %>%
-              dplyr::rename("Lineage1" = V1, "Lineage2" = V2, "Lineage3" = V3) %>%
-              pivot_longer(starts_with("Lineage"), names_to = "Curve", values_to = "weights")
-      )
-df_w <- df %>%
-  select(-pst) %>%
+df <- bioc2021trajectories::sling_reassign(sds) %>% 
+  as.data.frame() %>%
+  mutate(cells = rownames(.)) %>%
+  dplyr::rename("Lineage1" = V1, "Lineage2" = V2, "Lineage3" = V3) %>%
+  pivot_longer(starts_with("Lineage"), names_to = "Curve", values_to = "weights") %>%
+  full_join(df) %>%
   group_by(cells) %>%
-  mutate(weights = weights / sum(weights)) %>%
-  pivot_wider(names_from = "Curve", values_from = "weights")
-ggplot(df_w, aes(x = Lineage1, y = Lineage3)) +
-  # geom_hex(aes(fill=log(..count..))) +
+  select(-pst) %>% 
+  mutate(weights = weights / sum(weights)) %>% 
+  ungroup()
+```
+
+We can first look at the total weight of each lineage in each condition. Two clear conclusions can be drawn here:
++ Lineage 1, the longest lineage, indeed captures more cells in all lineages
++ There are fewer H2122A cells in lineage 2, compared to the other conditions.
+
+```{r}
+ggplot(df %>% group_by(Batch, Curve) %>% 
+         summarise(weights = mean(weights), .groups = NULL),
+       aes(x = Curve, fill = Batch, y = weights)) +
+  geom_col(position = "dodge") +
+  scale_fill_brewer(palette = "Accent") +
+  theme(legend.position = c(.7, .7)) +
+  labs(x = "", y = "Mean weight")
+```
+
+
+```{r}
+ggplot(df %>% pivot_wider(names_from = "Curve", values_from = "weights"),
+       aes(x = Lineage1, y = Lineage3)) +
   geom_hex() +
   scale_fill_viridis_c(direction = -1) +
   facet_wrap(~Batch, scales = "free") +
@@ -278,21 +290,12 @@ ggplot(df_w, aes(x = Lineage1, y = Lineage3)) +
   labs(x = "Weights for Lineage 1 (w1)", y = "Weights for Lineage 2 (w2)",
        fill = "counts per hexagon")
 ```
+## Test
 
 ```{r}
-df_w <- df %>%
-  select(-pst) %>%
-  group_by(cells) %>%
-  mutate(weights = weights / sum(weights)) %>%
-  ungroup() %>%
-  group_by(Batch, Curve) %>%
-  summarise(weights = mean(weights), .groups = NULL)
-ggplot(df_w, aes(x = Curve, fill = Batch, y = weights)) +
-  geom_col(position = "dodge") +
-  scale_fill_brewer(palette = "Accent") +
-  theme(legend.position = c(.7, .7)) +
-  labs(x = "", y = "Mean weight")
+differentiationTest(sds, conditions = kras$Batch, pairwise = TRUE)
 ```
+
 
 # Session info 
 
