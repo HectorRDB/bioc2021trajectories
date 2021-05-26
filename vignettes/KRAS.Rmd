@@ -52,6 +52,9 @@ We rely on normalization conducted in the original paper, and will used the redu
 
 ```{r}
 data("kras", package = "bioc2021trajectories")
+```
+
+```{r}
 kras
 ```
 
@@ -80,8 +83,13 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, fill = Cluster)) +
   labs(fill = "Cell Clusters")
 ```
 
-# Imbalance score
+# Differential Topology
 
+The first question we ask is whether we can fit a common trajectory. If the differences between the models are limited, then a common trajectory is possible. If there are large changes, then it is better to fit one trajectory per tumor model. In that latter case, depending on the scale of those changes, it may still be possible to reconcile the trajectories manually.
+
+To assess this, we first use a visual tool called the _imbalance_score_
+
+## Imbalance score
 
 ```{r}
 kras <- imbalance_score(Object = kras, conditions = "Batch", dimred = "TSNE")
@@ -92,95 +100,105 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, col = scores)) +
   labs(col = "Score")
 ```
 
-# Differential Topology
+There are some clear regions of imbalance (especially in cluster 10), although overall the three conditions are well mixed.
 
-To estimate the trajectory, we use _slingshot_ [@Street2018a].
+To assess whether a common trajectory can be fitted in a more quantitative manner, we will rely on the _topologyTest_. To do this, we fit a common trajectory (under the null) which will serve as a guide for condition-level trajectories. To estimate the trajectory, we use _slingshot_ [@Street2018a].
 
-## Fit slingshot
+## Fit slingshot and visualize the trajectory skeleton.
 
 ```{r}
 kras <- slingshot(kras, reducedDim = "TSNE", clusterLabels = kras$Cluster,
                  start.clus = 7, extend = "n", reweight = FALSE, reassign = FALSE)
 ```
 
+```{r}
+mst <- slingMST(kras, as.df = TRUE)
+ggplot(df, aes(x = tSNE1, y = tSNE2)) +
+  geom_point(size = 1, alpha = .65, col = "grey70", shape = 21,
+             aes(fill = Cluster)) +
+  scale_fill_manual(values = cols) +
+  labs(fill = "Cell Clusters") +
+  geom_point(size = 3, data = mst) +
+  geom_path(size = 1.5, data = mst, aes(group = Lineage))
+```
+
+The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The _topologyTest_ utilizes this tree structure when fitting curves to the cells of each conditions, as well as random sets of the data, and compare whether the two distributions are similar.
+
 ## Topology Test
 
-```{r, eval = FALSE}
+```{r}
 set.seed(23)
 topologyTest(kras, conditions = "Batch", rep = 50)
 ```
 
+Here, we clearly reject the _topologyTest_: we should fit a separate trajectory per condition. 
+
 ## Individual curves
+### Fit
 
 ```{r}
 sdss <- slingshot_conditions(kras, kras$Batch, approx_points = FALSE,
                              extend = "n", reweight = FALSE, reassign = FALSE)
-sdss$condition_id <- names(sdss)
-sdss$mapping <- matrix(rep(1:3, each = 3), nrow = 3, ncol = 3, byrow = TRUE)
-sds <- do.call(merge_sds, sdss)
+```
+
+### Plot skeletons
+
+```{r}
+msts <- lapply(sdss, slingMST, as.df = TRUE) %>%
+  bind_rows(.id = "Batch") %>%
+  arrange(Batch)
+
+ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
+  geom_point(size = .7, alpha = .1) +
+  scale_color_brewer(palette = "Accent") +
+  geom_point(data = msts, size = 3) +
+  geom_path(data = msts, aes(group = interaction(Lineage, Batch)),
+            size = 2)
+```
+
+### Plot curves
+```{r}
+lineages <- lapply(sdss, slingCurves, as.df = TRUE) %>%
+  bind_rows(.id = "Batch") %>%
+  arrange(Order)
 ```
 
 ```{r}
-df <- df %>% select(cells, tSNE1, tSNE2, Cluster, Batch) %>%
-  full_join(
-    slingPseudotime(sds) %>%
-      as.data.frame() %>%
-      mutate(cells = rownames(.))) %>%
-  pivot_longer(starts_with("Lineage"), names_to = "Curve", values_to = "pst")
-p <- ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
-  geom_point(size = .7, alpha = .1) +
-  scale_color_brewer(palette = "Accent")
-lineages <- lapply(sdss[1:3], function(crv) {
-  slingCurves(crv, as.df = TRUE)
-}) %>%
-  bind_rows(.id = "Batch") %>%
-    arrange(Order)
-p <- p + geom_path(data = lineages, size = 1.5, 
-                   mapping = aes(group = interaction(Lineage, Batch)))
 position <- data.frame(
   "tSNE1" = c(40, -30, 45),
   "tSNE2" = c(50, -50, -50),
   "Batch" = "H2122A",
   "text" = paste0("Lineage ", 1:3)
 )
-p + geom_text(data = position, col = "black", aes(label = text), size = 5)
+
+ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
+  geom_point(size = .7, alpha = .2) +
+  scale_color_brewer(palette = "Accent") + 
+  geom_path(data = lineages, size = 1.5, aes(group = interaction(Lineage, Batch))) + 
+  geom_text(data = position, col = "black", aes(label = text), size = 5)
 ```
 
-```{r}
-p <- ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
-  geom_point(size = .7, alpha = .1) +
-  scale_color_brewer(palette = "Accent")
+## Manual mapping
 
-cls <- df %>% group_by(Cluster, Batch) %>%
-  dplyr::summarise(tSNE1 = mean(tSNE1), tSNE2 = mean(tSNE2), .groups = NULL)
-p <- p +
-  geom_point(data = cls, size = 3)
-edges <- lapply(slingLineages(sds), function(lin) {
-  from <- lin[1:(length(lin) - 1)]
-  to <- lin[2:length(lin)]
-  return(data.frame("from" = from, "to" = to))
-}) %>% bind_rows()
-for (batch in unique(kras$Batch)) {
-  cl_batch <- cls %>% filter(Batch == batch)
-  edges_batch <- left_join(edges, cl_batch, by = c("from" = "Cluster")) %>%
-    left_join(cl_batch %>% dplyr::rename("tSNE1_end" = "tSNE1",
-                                  "tSNE2_end" = "tSNE2") %>%
-                select(-Batch), by = c("to" = "Cluster") )
-    p <- p +
-     geom_segment(data = edges_batch, aes(xend = tSNE1_end, yend = tSNE2_end),
-                  size = 2)
-}
-p
+```{r}
+sdss$condition_id <- names(sdss)
+sdss$mapping <- matrix(rep(1:3, each = 3), nrow = 3, ncol = 3, byrow = TRUE)
+sds <- do.call(merge_sds, sdss)
 ```
 
 # Differential Progression
-## Test
-
+## Plot
 ```{r}
-progressionTest(sds, conditions = kras$Batch, lineages = TRUE)
+df <- full_join(
+  df %>% 
+    select(cells, tSNE1, tSNE2, Cluster, Batch),
+  slingPseudotime(sds) %>%
+    as.data.frame() %>%
+    mutate(cells = rownames(.))
+) %>%
+  pivot_longer(starts_with("Lineage"), names_to = "Curve", values_to = "pst")
 ```
 
-## Plot
 
 ```{r}
 ggplot(df, aes(x = pst)) +
@@ -191,6 +209,12 @@ ggplot(df, aes(x = pst)) +
   scale_color_brewer(palette = "Accent") +
   labs(x = "Pseudotime", fill = "Type") +
   facet_wrap(~ Curve, scales = "free_x")
+```
+
+## Test
+
+```{r}
+progressionTest(sds, conditions = kras$Batch, lineages = TRUE)
 ```
 
 # Differential Differentiation
