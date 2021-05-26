@@ -136,12 +136,16 @@ Here, we clearly reject the _topologyTest_: we should fit a separate trajectory 
 ## Individual curves
 ### Fit
 
+We therefore fit one trajectory per tumor model, or batch, using the _slingshot_conditions_ function. 
+
 ```{r}
 sdss <- slingshot_conditions(kras, kras$Batch, approx_points = FALSE,
                              extend = "n", reweight = FALSE, reassign = FALSE)
 ```
 
 ### Plot skeletons
+
+We can plot the skeleton of each trajectory. They are clearly very similar and we can visually map the trajectories: the lineages map well onto one another.
 
 ```{r}
 msts <- lapply(sdss, slingMST, as.df = TRUE) %>%
@@ -157,6 +161,9 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
 ```
 
 ### Plot curves
+
+Similarly with the curves, we see that the three lineages of each trajectory map to one another across conditions. 
+
 ```{r}
 lineages <- lapply(sdss, slingCurves, as.df = TRUE) %>%
   bind_rows(.id = "Batch") %>%
@@ -180,13 +187,19 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, col = Batch)) +
 
 ## Manual mapping
 
+Although we have fitted a different trajectory per condition, we can therefore proceed to step 2 and look at differential progression and differentiation, by manually mapping the trajectories.
+
 ```{r}
-sdss$condition_id <- names(sdss)
-sdss$mapping <- matrix(rep(1:3, each = 3), nrow = 3, ncol = 3, byrow = TRUE)
-sds <- do.call(merge_sds, sdss)
+mapping <- matrix(rep(1:3, each = 3), nrow = 3, ncol = 3, byrow = TRUE)
+mapping
+sds <- merge_sds(sdss[[1]], sdss[[2]], sdss[[3]], 
+                 condition_id = names(sdss), mapping = mapping)
 ```
 
 # Differential Progression
+
+Similarly to the TGFB dataset, we can look at large-scale differences between conditions. Specifically, we want to see if the pseudotime distributions are similar across conditions.
+
 ## Plot
 ```{r}
 df <- full_join(
@@ -197,10 +210,7 @@ df <- full_join(
     mutate(cells = rownames(.))
 ) %>%
   pivot_longer(starts_with("Lineage"), names_to = "Curve", values_to = "pst")
-```
 
-
-```{r}
 ggplot(df, aes(x = pst)) +
   geom_density(alpha = .4, aes(fill = Batch), col = "transparent") +
   geom_density(aes(col = Batch), fill = "transparent", size = 1.5) +
@@ -211,13 +221,26 @@ ggplot(df, aes(x = pst)) +
   facet_wrap(~ Curve, scales = "free_x")
 ```
 
+Visually, we can see three phenomenons:
+
++ In lineage 1, there is a cluster of cells from H2122A around pseudotime 100, and more cells at the end of the lineage for condition H358A.
++ In lineage 2, there are many more cells from H2122A for earlier pseudotime values and far fewer for later time points.
++ In lineage 3, there are many more cells from SW1573A for earlier pseudotime values and far fewer for later time points.
+
 ## Test
+
+We can also test this in a more principled manner using the _progressionTest_. Since we have three conditions, we perform a classifier test (see [@Lopez-Paz2016]). By setting `lineages=TRUE`, we perform the test for individual lineages and for the full trajectory. 
+
+The test statistic reflects the accuracy of the classifier on a balanced test data, so under the null, the expected value is $1/3$.
 
 ```{r}
 progressionTest(sds, conditions = kras$Batch, lineages = TRUE)
 ```
 
 # Differential Differentiation
+
+
+
 ## Test
 
 ```{r}
