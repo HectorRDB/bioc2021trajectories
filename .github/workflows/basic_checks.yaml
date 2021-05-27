@@ -2,7 +2,7 @@ on: [push, pull_request]
 
 env:
   cache-version: v1
-  repo-name: hectorrdb/bioc2021trajectories
+  repo-name: hectorrb/bioc2021trajectories
 
 jobs:
   job1:

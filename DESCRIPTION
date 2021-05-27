@@ -44,4 +44,4 @@ Imports:
     openxlsx
 VignetteBuilder: knitr
 URL: https://hectorrdb.github.io//bioc2021trajectories
-DockerImage: hectorrdb/bioc2021trajectories:latest
+DockerImage: hectorrb/bioc2021trajectories:latest
