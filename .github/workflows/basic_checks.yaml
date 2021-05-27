@@ -1,9 +1,8 @@
-
 on: [push, pull_request]
 
 env:
   cache-version: v1
-  repo-name: hectorrdb/bioc2021trajectories
+  repo-name: seandavi/buildabiocworkshop
 
 jobs:
   job1:
@@ -66,30 +65,19 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: docs # The folder the action should deploy.
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      
-      - name: Login to DockerHub
-        uses: docker/login-action@v1 
+      - uses: docker/build-push-action@v1
         with:
+          # The two entries below need to be entered as 
+          # github secrets. The "secret" names are "DOCKER_USERNAME"
+          # and "DOCKER_PASSWORD". See https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository
+          # for detailed instructions. 
+          #
+          # DO NOT EDIT THESE ENTRIES HERE. Doing so will 
+          # expose your docker username and password on github.
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ env.repo-name }}:latest, ${{ env.repo-name }}:main
-
-      # - uses: docker/build-push-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-      #     repository: ${{ env.repo-name }}
-      #     tag_with_ref: true
-      #     tag_with_sha: true
-      #     tags: latest
+          # Use the environment variable on first few lines to set repo name--just centralizes changes
+          repository: ${{ env.repo-name }}
+          tag_with_ref: true
+          tag_with_sha: true
+          tags: latest
