@@ -18,7 +18,7 @@ vignette: >
 ```{r}
 library(knitr)
 opts_chunk$set(
-  eval = FALSE
+  eval = TRUE
 )
 ```
 

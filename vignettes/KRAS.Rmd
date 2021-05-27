@@ -26,7 +26,7 @@ We will use this dataset as an example of how to perform the first two steps of 
 ```{r}
 library(knitr)
 opts_chunk$set(
-  eval = TRUE
+  eval = FALSE
 )
 ```
 
