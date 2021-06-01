@@ -1,7 +1,7 @@
 on: [push, pull_request]
 
 env:
-  cache-version: v3
+  cache-version: v3.5
   repo-name: hectorrb/bioc2021trajectories
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - name: Query dependencies and update old packages
         run: |
           BiocManager::install(ask=FALSE)
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depend.Rds", version = 2)
         shell: Rscript {0}
         
       - name: Cache R packages
