@@ -30,7 +30,8 @@ Suggests:
     magrittr,
     fgsea,
     cowplot,
-    tradeSeq
+    tradeSeq,
+    randomForest
 Imports: 
     slingshot,
     GEOquery,
