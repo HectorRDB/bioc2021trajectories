@@ -1,5 +1,5 @@
 ---
-title: 'Analysis of the KRAS datataset'
+title: 'Second example: KRAS dataset'
 author: "Hector Roux de Bézieux"
 bibliography: ref.bib
 output: 
@@ -21,15 +21,8 @@ While the authors used the three models to validate their results, we can also l
 We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting.
 + We first check if we can fit a single trajectory, which we call **differential topology**.
 + We then look for large-scale changes, indicative of **differential progression** and **differential differentiation**. 
+
 # Load data
-
-```{r}
-library(knitr)
-opts_chunk$set(
-  eval = FALSE
-)
-```
-
 
 ```{r}
 libs <- c("here", "dplyr", "tradeSeq", "SingleCellExperiment", "slingshot",
