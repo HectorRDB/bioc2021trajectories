@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Analysis of the KRAS datataset • bioc2021trajectories</title>
+<title>Second example: KRAS dataset • bioc2021trajectories</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Analysis of the KRAS datataset">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Second example: KRAS dataset">
 <meta property="og:description" content="bioc2021trajectories">
 <meta property="og:image" content="https://hectorrdb.github.io/bioc2021trajectories/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bioc2021trajectories</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -64,10 +64,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/KRAS.html">Analysis of the KRAS datataset</a>
+      <a href="../articles/KRAS.html">Second example: KRAS dataset</a>
     </li>
     <li>
-      <a href="../articles/TGFB.html">First example: TGF-Beta dataset</a>
+      <a href="../articles/TGFB.html">First example: TGF-beta dataset</a>
     </li>
   </ul>
 </li>
@@ -92,7 +92,7 @@
       </header><script src="KRAS_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Analysis of the KRAS datataset</h1>
+      <h1 data-toc-skip>Second example: KRAS dataset</h1>
                         <h4 class="author">Hector Roux de Bézieux</h4>
             
       
@@ -108,11 +108,15 @@
 <a href="#overview" class="anchor"></a>Overview</h1>
 <p>The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a KRAS(G12C) inhibition <span class="citation">(Xue et al. 2020)</span>. Those types of molecules are currently in early-phase clinical trials and a large group of lung adenocarcinoma seem to be able to at least partially evade those treatments. The authors of the original study therefore look at the impact of KRAS(G12C) inhibitors on three models of tumors and show that cells evolve along three lineages.</p>
 <p>While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three models).</p>
-<p>We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting. + We first check if we can fit a single trajectory, which we call <strong>differential topology</strong>. + We then look for large-scale changes, indicative of <strong>differential progression</strong> and <strong>differential differentiation</strong>. # Load data</p>
+<p>We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting. + We first check if we can fit a single trajectory, which we call <strong>differential topology</strong>. + We then look for large-scale changes, indicative of <strong>differential progression</strong> and <strong>differential differentiation</strong>.</p>
+</div>
+<div id="load-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#load-data" class="anchor"></a>Load data</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
 <span class="va">opts_chunk</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>
-  eval <span class="op">=</span> <span class="cn">FALSE</span>
+  eval <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">libs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"here"</span>, <span class="st">"dplyr"</span>, <span class="st">"tradeSeq"</span>, <span class="st">"SingleCellExperiment"</span>, <span class="st">"slingshot"</span>,
@@ -120,23 +124,44 @@
           <span class="st">"tidyr"</span>, <span class="st">"ggplot2"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">libs</span>, <span class="va">require</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">libs</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<pre><code>##                 here                dplyr             tradeSeq 
+##                FALSE                 TRUE                 TRUE 
+## SingleCellExperiment            slingshot           condiments 
+##                 TRUE                 TRUE                 TRUE 
+##               scater         RColorBrewer             pheatmap 
+##                FALSE                 TRUE                 TRUE 
+##              cowplot                tidyr              ggplot2 
+##                 TRUE                 TRUE                 TRUE</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">libs</span><span class="op">)</span>
 <span class="fu">theme_set</span><span class="op">(</span><span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kras</span> <span class="op">&lt;-</span> <span class="fu">bioc2021trajectories</span><span class="fu">::</span><span class="fu"><a href="../reference/import_KRAS.html">import_KRAS</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">kras</span> <span class="op">&lt;-</span> <span class="va">kras</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></code></pre></div>
 <p>We rely on normalization conducted in the original paper, and will used the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"kras"</span>, package <span class="op">=</span> <span class="st">"bioc2021trajectories"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kras</span></code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 100 10177 
+## metadata(0):
+## assays(1): counts
+## rownames(100): NOC2L HES4 ... MECR PUM1
+## rowData names(20): ensembl gene_short_name ... br.qval br.qval.72
+## colnames(10177): H358_A_AAACATACATAAGG H358_A_AAACATACATACCG ...
+##   SW1573_D_TTTAGAGATCAGAC SW1573_D_TTTCGAACTTCTGT
+## colData names(98): nGene nUMI ... slingshot cells
+## reducedDimNames(1): TSNE
+## mainExpName: NULL
+## altExpNames(0):</code></pre>
 </div>
 <div id="eda" class="section level1">
 <h1 class="hasAnchor">
 <a href="#eda" class="anchor"></a>EDA</h1>
 <p>We can visualize all the single cells in a shared reduced dimensional space, according to the tumor model or the clusters from the original publication.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">5</span>, <span class="st">"Blues"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,
           <span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"Greens"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,
           <span class="fu">brewer.pal</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"Reds"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,
@@ -148,11 +173,13 @@
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="KRAS_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">tSNE1</span>, y <span class="op">=</span> <span class="va">tSNE2</span>, fill <span class="op">=</span> <span class="va">Cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">.65</span>, col <span class="op">=</span> <span class="st">"grey70"</span>, shape <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Cell Clusters"</span><span class="op">)</span></code></pre></div>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="differential-topology" class="section level1">
 <h1 class="hasAnchor">
@@ -162,23 +189,24 @@
 <div id="imbalance-score" class="section level2">
 <h2 class="hasAnchor">
 <a href="#imbalance-score" class="anchor"></a>Imbalance score</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kras</span> <span class="op">&lt;-</span> <span class="fu">imbalance_score</span><span class="op">(</span>Object <span class="op">=</span> <span class="va">kras</span>, conditions <span class="op">=</span> <span class="st">"Batch"</span>, dimred <span class="op">=</span> <span class="st">"TSNE"</span><span class="op">)</span>
 <span class="va">df</span><span class="op">$</span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="va">kras</span><span class="op">[</span>, <span class="va">df</span><span class="op">$</span><span class="va">cells</span><span class="op">]</span><span class="op">$</span><span class="va">scores</span><span class="op">$</span><span class="va">scaled_scores</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">tSNE1</span>, y <span class="op">=</span> <span class="va">tSNE2</span>, col <span class="op">=</span> <span class="va">scores</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_viridis_c</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"Score"</span><span class="op">)</span></code></pre></div>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>There are some clear regions of imbalance (especially in cluster 10), although overall the three conditions are well mixed.</p>
 <p>To assess whether a common trajectory can be fitted in a more quantitative manner, we will rely on the <em>topologyTest</em>. To do this, we fit a common trajectory (under the null) which will serve as a guide for condition-level trajectories. To estimate the trajectory, we use <em>slingshot</em> <span class="citation">(Street et al. 2018)</span>.</p>
 </div>
 <div id="fit-slingshot-and-visualize-the-trajectory-skeleton-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fit-slingshot-and-visualize-the-trajectory-skeleton-" class="anchor"></a>Fit slingshot and visualize the trajectory skeleton.</h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kras</span> <span class="op">&lt;-</span> <span class="fu">slingshot</span><span class="op">(</span><span class="va">kras</span>, reducedDim <span class="op">=</span> <span class="st">"TSNE"</span>, clusterLabels <span class="op">=</span> <span class="va">kras</span><span class="op">$</span><span class="va">Cluster</span>,
                  start.clus <span class="op">=</span> <span class="fl">7</span>, extend <span class="op">=</span> <span class="st">"n"</span>, reweight <span class="op">=</span> <span class="cn">FALSE</span>, reassign <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mst</span> <span class="op">&lt;-</span> <span class="fu">slingMST</span><span class="op">(</span><span class="va">kras</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">tSNE1</span>, y <span class="op">=</span> <span class="va">tSNE2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">.65</span>, col <span class="op">=</span> <span class="st">"grey70"</span>, shape <span class="op">=</span> <span class="fl">21</span>,
@@ -187,14 +215,20 @@
   <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Cell Clusters"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, data <span class="op">=</span> <span class="va">mst</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_path</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span>, data <span class="op">=</span> <span class="va">mst</span>, <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">Lineage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The <em>topologyTest</em> utilizes this tree structure when fitting curves to the cells of each conditions, as well as random sets of the data, and compare whether the two distributions are similar.</p>
 </div>
 <div id="topology-test" class="section level2">
 <h2 class="hasAnchor">
 <a href="#topology-test" class="anchor"></a>Topology Test</h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">23</span><span class="op">)</span>
 <span class="fu">topologyTest</span><span class="op">(</span><span class="va">kras</span>, conditions <span class="op">=</span> <span class="st">"Batch"</span>, rep <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></code></pre></div>
+<pre><code>## Generating permuted trajectories</code></pre>
+<pre><code>## Running Classifier test</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>##       method thresh statistic p.value
+## 1 Classifier   0.01 0.9181035       0</code></pre>
 <p>Here, we clearly reject the <em>topologyTest</em>: we should fit a separate trajectory per condition.</p>
 </div>
 <div id="individual-curves" class="section level2">
@@ -204,7 +238,7 @@
 <h3 class="hasAnchor">
 <a href="#fit" class="anchor"></a>Fit</h3>
 <p>We therefore fit one trajectory per tumor model, or batch, using the <em>slingshot_conditions</em> function.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sdss</span> <span class="op">&lt;-</span> <span class="fu">slingshot_conditions</span><span class="op">(</span><span class="va">kras</span>, <span class="va">kras</span><span class="op">$</span><span class="va">Batch</span>, approx_points <span class="op">=</span> <span class="cn">FALSE</span>,
                              extend <span class="op">=</span> <span class="st">"n"</span>, reweight <span class="op">=</span> <span class="cn">FALSE</span>, reassign <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -212,7 +246,7 @@
 <h3 class="hasAnchor">
 <a href="#plot-skeletons" class="anchor"></a>Plot skeletons</h3>
 <p>We can plot the skeleton of each trajectory. They are clearly very similar and we can visually map the trajectories: the lineages map well onto one another.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">msts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">sdss</span>, <span class="va">slingMST</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"Batch"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="va">Batch</span><span class="op">)</span>
@@ -223,16 +257,17 @@
   <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">msts</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_path</span><span class="op">(</span>data <span class="op">=</span> <span class="va">msts</span>, <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">Lineage</span>, <span class="va">Batch</span><span class="op">)</span><span class="op">)</span>,
             size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div id="plot-curves" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-curves" class="anchor"></a>Plot curves</h3>
 <p>Similarly with the curves, we see that the three lineages of each trajectory map to one another across conditions.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lineages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">sdss</span>, <span class="va">slingCurves</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"Batch"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="va">Order</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">position</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   <span class="st">"tSNE1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="op">-</span><span class="fl">30</span>, <span class="fl">45</span><span class="op">)</span>,
   <span class="st">"tSNE2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">50</span><span class="op">)</span>,
@@ -245,16 +280,22 @@
   <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_path</span><span class="op">(</span>data <span class="op">=</span> <span class="va">lineages</span>, size <span class="op">=</span> <span class="fl">1.5</span>, <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">Lineage</span>, <span class="va">Batch</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">position</span>, col <span class="op">=</span> <span class="st">"black"</span>, <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">text</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 </div>
 <div id="manual-mapping" class="section level2">
 <h2 class="hasAnchor">
 <a href="#manual-mapping" class="anchor"></a>Manual mapping</h2>
 <p>Although we have fitted a different trajectory per condition, we can therefore proceed to step 2 and look at differential progression and differentiation, by manually mapping the trajectories.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">mapping</span>
-<span class="va">sds</span> <span class="op">&lt;-</span> <span class="fu">merge_sds</span><span class="op">(</span><span class="va">sdss</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">sdss</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">sdss</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, 
+<span class="va">mapping</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    1    1
+## [2,]    2    2    2
+## [3,]    3    3    3</code></pre>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sds</span> <span class="op">&lt;-</span> <span class="fu">merge_sds</span><span class="op">(</span><span class="va">sdss</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">sdss</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">sdss</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, 
                  condition_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">sdss</span><span class="op">)</span>, mapping <span class="op">=</span> <span class="va">mapping</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
@@ -265,7 +306,7 @@
 <div id="plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot" class="anchor"></a>Plot</h2>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">full_join</span><span class="op">(</span>
   <span class="va">df</span> <span class="op">%&gt;%</span> 
     <span class="fu">select</span><span class="op">(</span><span class="va">cells</span>, <span class="va">tSNE1</span>, <span class="va">tSNE2</span>, <span class="va">Cluster</span>, <span class="va">Batch</span><span class="op">)</span>,
@@ -273,9 +314,10 @@
     <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">mutate</span><span class="op">(</span>cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"Lineage"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"Curve"</span>, values_to <span class="op">=</span> <span class="st">"pst"</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pst</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"Lineage"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"Curve"</span>, values_to <span class="op">=</span> <span class="st">"pst"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Joining, by = "cells"</code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pst</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.4</span>, <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Batch</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_density</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">Batch</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"transparent"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">guides</span><span class="op">(</span>col <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
@@ -283,6 +325,10 @@
   <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Pseudotime"</span>, fill <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">Curve</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: Removed 13000 rows containing non-finite values (stat_density).
+
+## Warning: Removed 13000 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>Visually, we can see three phenomenons:</p>
 <ul>
 <li>In lineage 1, there is a cluster of cells from H2122A around pseudotime 100, and more cells at the end of the lineage for condition H358A.</li>
@@ -295,8 +341,13 @@
 <a href="#test" class="anchor"></a>Test</h2>
 <p>We can also test this in a more principled manner using the <em>progressionTest</em>. Since we have three conditions, we perform a classifier test (see <span class="citation">(Lopez-Paz and Oquab 2016)</span>). By setting <code>lineages=TRUE</code>, we perform the test for individual lineages and for the full trajectory.</p>
 <p>The test statistic reflects the accuracy of the classifier on a balanced test data, so under the null, the expected value is <span class="math inline">\(1/3\)</span>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">progressionTest</span><span class="op">(</span><span class="va">sds</span>, conditions <span class="op">=</span> <span class="va">kras</span><span class="op">$</span><span class="va">Batch</span>, lineages <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>##   lineage statistic      p.value
+## 1     All 0.8296334 0.000000e+00
+## 2       1 0.5089786 2.355639e-43
+## 3       2 0.4859742 2.520532e-15
+## 4       3 0.4549123 1.840264e-11</code></pre>
 </div>
 </div>
 <div id="differential-differentiation" class="section level1">
@@ -307,7 +358,7 @@
 <div id="plot-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-1" class="anchor"></a>Plot</h2>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">bioc2021trajectories</span><span class="fu">::</span><span class="fu"><a href="../reference/sling_reassign.html">sling_reassign</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -318,8 +369,11 @@
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">pst</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>weights <span class="op">=</span> <span class="va">weights</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## Setting options('download.file.method.GEOquery'='auto')</code></pre>
+<pre><code>## Setting options('GEOquery.inmemory.gpl'=FALSE)</code></pre>
+<pre><code>## Joining, by = c("cells", "Curve")</code></pre>
 <p>We can first look at the total weight of each lineage in each condition. Two clear conclusions can be drawn here: + Lineage 1, the longest lineage, indeed captures more cells in all lineages + There are fewer H2122A cells in lineage 2, compared to the other conditions.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">Batch</span>, <span class="va">Curve</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">summarise</span><span class="op">(</span>weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Curve</span>, fill <span class="op">=</span> <span class="va">Batch</span>, y <span class="op">=</span> <span class="va">weights</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -327,7 +381,9 @@
   <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.7</span>, <span class="fl">.7</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Mean weight"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<pre><code>## `summarise()` has grouped output by 'Batch'. You can override using the `.groups` argument.</code></pre>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="st">"Curve"</span>, values_from <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Lineage1</span>, y <span class="op">=</span> <span class="va">Lineage3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_hex</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -342,19 +398,143 @@
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Weights for Lineage 1 (w1)"</span>, y <span class="op">=</span> <span class="st">"Weights for Lineage 2 (w2)"</span>,
        fill <span class="op">=</span> <span class="st">"counts per hexagon"</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="test-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#test-1" class="anchor"></a>Test</h2>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<pre><code>## Warning: Computation failed in `stat_binhex()`:
+##   Package `hexbin` required for `stat_binhex`.
+##   Please install and try again.
+
+## Warning: Computation failed in `stat_binhex()`:
+##   Package `hexbin` required for `stat_binhex`.
+##   Please install and try again.
+
+## Warning: Computation failed in `stat_binhex()`:
+##   Package `hexbin` required for `stat_binhex`.
+##   Please install and try again.</code></pre>
+<p><img src="KRAS_files/figure-html/unnamed-chunk-21-1.png" width="700"> ## Test</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">differentiationTest</span><span class="op">(</span><span class="va">sds</span>, conditions <span class="op">=</span> <span class="va">kras</span><span class="op">$</span><span class="va">Batch</span>, pairwise <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>## note: only 1 unique complexity parameters in default grid. Truncating the grid to 1 .
+## 
+## note: only 1 unique complexity parameters in default grid. Truncating the grid to 1 .
+## 
+## note: only 1 unique complexity parameters in default grid. Truncating the grid to 1 .
+## 
+## note: only 2 unique complexity parameters in default grid. Truncating the grid to 2 .</code></pre>
+<pre><code>##   pair statistic      p.value
+## 1  All 0.4900000 8.231091e-42
+## 2 1vs2 0.4210231 6.586841e-13
+## 3 1vs3 0.4042857 5.557279e-10
+## 4 2vs3 0.4793883 9.359587e-18</code></pre>
 </div>
 </div>
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## R version 4.1.0 (2021-05-18)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 20.04.2 LTS
+## 
+## Matrix products: default
+## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] caret_6.0-88                lattice_0.20-44            
+##  [3] ggplot2_3.3.3               tidyr_1.1.3                
+##  [5] cowplot_1.1.1               pheatmap_1.0.12            
+##  [7] RColorBrewer_1.1-2          condiments_1.1.02          
+##  [9] slingshot_2.1.0             TrajectoryUtils_1.1.0      
+## [11] princurve_2.1.6             SingleCellExperiment_1.15.1
+## [13] SummarizedExperiment_1.23.0 Biobase_2.53.0             
+## [15] GenomicRanges_1.45.0        GenomeInfoDb_1.29.0        
+## [17] IRanges_2.27.0              S4Vectors_0.31.0           
+## [19] BiocGenerics_0.39.0         MatrixGenerics_1.5.0       
+## [21] matrixStats_0.59.0          tradeSeq_1.7.01            
+## [23] dplyr_1.0.6                 knitr_1.33                 
+## 
+## loaded via a namespace (and not attached):
+##   [1] VGAM_1.1-5                 systemfonts_1.0.2         
+##   [3] plyr_1.8.6                 igraph_1.2.6              
+##   [5] splines_4.1.0              bioc2021trajectories_0.0.2
+##   [7] BiocParallel_1.27.0        densityClust_0.3          
+##   [9] fastICA_1.2-2              digest_0.6.27             
+##  [11] foreach_1.5.1              htmltools_0.5.1.1         
+##  [13] viridis_0.6.1              fansi_0.5.0               
+##  [15] magrittr_2.0.1             memoise_2.0.0             
+##  [17] tensor_1.5                 cluster_2.1.2             
+##  [19] openxlsx_4.2.3             limma_3.49.0              
+##  [21] readr_1.4.0                recipes_0.1.16            
+##  [23] gower_0.2.2                R.utils_2.10.1            
+##  [25] docopt_0.7.1               pkgdown_1.6.1             
+##  [27] spatstat.sparse_2.0-0      colorspace_2.0-1          
+##  [29] ggrepel_0.9.1              textshaping_0.3.4         
+##  [31] xfun_0.23                  sparsesvd_0.2             
+##  [33] crayon_1.4.1               RCurl_1.98-1.3            
+##  [35] spatstat_2.1-0             spatstat.data_2.1-0       
+##  [37] GEOquery_2.61.0            survival_3.2-11           
+##  [39] iterators_1.0.13           glue_1.4.2                
+##  [41] polyclip_1.10-0            gtable_0.3.0              
+##  [43] ipred_0.9-11               zlibbioc_1.39.0           
+##  [45] XVector_0.33.0             DelayedArray_0.19.0       
+##  [47] Ecume_0.9.1                kernlab_0.9-29            
+##  [49] Rhdf5lib_1.15.0            DropletUtils_1.13.0       
+##  [51] HDF5Array_1.21.0           abind_1.4-5               
+##  [53] scales_1.1.1               edgeR_3.35.0              
+##  [55] Rcpp_1.0.6                 viridisLite_0.4.0         
+##  [57] dqrng_0.3.0                spatstat.core_2.1-2       
+##  [59] proxy_0.4-25               lava_1.6.9                
+##  [61] prodlim_2019.11.13         FNN_1.1.3                 
+##  [63] ellipsis_0.3.2             scuttle_1.3.0             
+##  [65] R.methodsS3_1.8.1          farver_2.1.0              
+##  [67] pkgconfig_2.0.3            nnet_7.3-16               
+##  [69] deldir_0.2-10              locfit_1.5-9.4            
+##  [71] utf8_1.2.1                 labeling_0.4.2            
+##  [73] tidyselect_1.1.1           rlang_0.4.11              
+##  [75] reshape2_1.4.4             munsell_0.5.0             
+##  [77] tools_4.1.0                cachem_1.0.5              
+##  [79] generics_0.1.0             evaluate_0.14             
+##  [81] stringr_1.4.0              fastmap_1.1.0             
+##  [83] goftest_1.2-2              yaml_2.2.1                
+##  [85] ragg_1.1.2                 ModelMetrics_1.2.2.2      
+##  [87] transport_0.12-2           fs_1.5.0                  
+##  [89] zip_2.2.0                  DDRTree_0.1.5             
+##  [91] randomForest_4.6-14        purrr_0.3.4               
+##  [93] RANN_2.6.1                 sparseMatrixStats_1.5.0   
+##  [95] pbapply_1.4-3              nlme_3.1-152              
+##  [97] monocle_2.21.0             slam_0.1-48               
+##  [99] R.oo_1.24.0                xml2_1.3.2                
+## [101] compiler_4.1.0             e1071_1.7-7               
+## [103] spatstat.utils_2.1-0       spatstat.linnet_2.1-1     
+## [105] tibble_3.1.2               stringi_1.6.2             
+## [107] highr_0.9                  desc_1.3.0                
+## [109] Matrix_1.3-3               HSMMSingleCell_1.13.0     
+## [111] vctrs_0.3.8                rhdf5filters_1.5.0        
+## [113] pillar_1.6.1               lifecycle_1.0.0           
+## [115] spatstat.geom_2.1-0        combinat_0.0-8            
+## [117] data.table_1.14.0          bitops_1.0-7              
+## [119] irlba_2.3.3                R6_2.5.0                  
+## [121] gridExtra_2.3              codetools_0.2-18          
+## [123] MASS_7.3-54                rhdf5_2.37.0              
+## [125] rprojroot_2.0.2            withr_2.4.2               
+## [127] qlcMatrix_0.9.7            GenomeInfoDbData_1.2.6    
+## [129] hms_1.1.0                  mgcv_1.8-35               
+## [131] beachmat_2.9.0             grid_4.1.0                
+## [133] rpart_4.1-15               timeDate_3043.102         
+## [135] class_7.3-19               DelayedMatrixStats_1.15.0 
+## [137] rmarkdown_2.8              Rtsne_0.15                
+## [139] pROC_1.17.0.1              lubridate_1.7.10</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
