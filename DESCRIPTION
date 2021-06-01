@@ -30,7 +30,6 @@ Suggests:
     magrittr,
     fgsea,
     cowplot,
-    randomForest,
     tradeSeq
 Imports: 
     slingshot,
