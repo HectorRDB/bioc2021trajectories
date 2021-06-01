@@ -1,5 +1,5 @@
 ---
-title: "First example: TGF-$\\beta$ dataset"
+title: "First example: TGF-beta dataset"
 output:
   rmarkdown::html_document:
     highlight: pygments
@@ -8,7 +8,7 @@ output:
     fig_width: 5
 #bibliography: "`r system.file(package='bioc2021trajectories', 'vignettes', 'bibliography.bib')`"
 vignette: >
-  %\VignetteIndexEntry{Analysis of the TGF-$$\beta$$ dataset}
+  %\VignetteIndexEntry{Analysis of the TGF-beta dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding[utf8]{inputenc}
 ---

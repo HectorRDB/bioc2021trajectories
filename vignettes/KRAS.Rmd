@@ -25,6 +25,13 @@ We will use this dataset as an example of how to perform the first two steps of 
 # Load data
 
 ```{r}
+library(knitr)
+opts_chunk$set(
+  eval = TRUE
+)
+```
+
+```{r}
 libs <- c("here", "dplyr", "tradeSeq", "SingleCellExperiment", "slingshot",
            "condiments", "scater", "RColorBrewer", "pheatmap", "cowplot",
           "tidyr", "ggplot2")
