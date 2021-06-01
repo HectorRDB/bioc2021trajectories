@@ -25,13 +25,6 @@ We will use this dataset as an example of how to perform the first two steps of 
 # Load data
 
 ```{r}
-library(knitr)
-opts_chunk$set(
-  eval = TRUE
-)
-```
-
-```{r}
 libs <- c("here", "dplyr", "tradeSeq", "SingleCellExperiment", "slingshot",
            "condiments", "scater", "RColorBrewer", "pheatmap", "cowplot",
           "tidyr", "ggplot2")
@@ -290,6 +283,7 @@ ggplot(df %>% pivot_wider(names_from = "Curve", values_from = "weights"),
   labs(x = "Weights for Lineage 1 (w1)", y = "Weights for Lineage 2 (w2)",
        fill = "counts per hexagon")
 ```
+
 ## Test
 
 ```{r}

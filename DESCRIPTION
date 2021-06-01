@@ -30,6 +30,7 @@ Suggests:
     magrittr,
     fgsea,
     cowplot,
+    hexbin,
     randomForest,
     tradeSeq
 Imports: 
