@@ -25,7 +25,7 @@ opts_chunk$set(
 
 We will follow the 3-steps workflow of the `condiments` package:
 
-+ We start by integrating datasets from multiple conditions and then check that we can fit a single trajectory, which we call **differential topology**.
++ We start by integrating datasets from multiple conditions and then check if we can fit a single trajectory, which we call **differential topology**.
 + By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of **differential progression**. 
 + We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as **differential expression**.
 
@@ -191,7 +191,7 @@ ggplot(df, aes(x = slingPseudotime_1, fill = spatial_id, col = spatial_id)) +
   geom_density(alpha = .7, size = 1.5) +
   scale_fill_brewer(palette = "Dark2") +
   scale_color_brewer(palette = "Dark2") +
-  labs(fill = "Spatial ID", col = "Spatial ID", x = "PSeudotime")
+  labs(fill = "Spatial ID", col = "Spatial ID", x = "Pseudotime")
 ```
 
 ## Differential progression

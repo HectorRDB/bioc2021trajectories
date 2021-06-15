@@ -1,4 +1,4 @@
-# Trajectory inference across conditions: differential expression and differential progression
+# Trajectory inference across conditions: differential topology, progression and expression
 
 [![.github/workflows/basic_checks.yaml](https://github.com/hectorrdb/bioc2021trajectories/workflows/.github/workflows/basic_checks.yaml/badge.svg)](https://github.com/hectorrdb/bioc2021trajectories/actions)
 
@@ -18,7 +18,7 @@ Many methods have been suggested for trajectory inference. However, in this sett
 
 In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We start by integrating datasets from multiple conditions into a single trajectory. By comparing the conditions along the trajectory's path, we can detect large-scale changes, indicative of differential progression. We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path.
 
-[This vignette](https://bioconductor.org/packages/release/bioc/vignettes/slingshot/inst/doc/conditionsVignette.html) provides a more complete problem description and proposes a few analytical approaches, which will serve as the basis of our workshop.
+[This paper](https://www.biorxiv.org/content/10.1101/2021.03.09.433671v1) provides a more complete problem description and proposes a few analytical approaches, which will serve as the basis of our workshop.
 
 ## Pre-requisites
 

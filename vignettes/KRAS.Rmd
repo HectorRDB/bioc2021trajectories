@@ -16,7 +16,7 @@ vignette: >
 
 The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a  KRAS(G12C) inhibition [@Xue2020]. Those types of molecules are currently in early-phase clinical trials and a large group of lung adenocarcinoma seem to be able to at least partially evade those treatments. The authors of the original study therefore look at the impact of KRAS(G12C) inhibitors on three models of tumors and show that cells evolve along three lineages.
 
-While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three models).
+While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three tumor models).
 
 We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting.
 + We first check if we can fit a single trajectory, which we call **differential topology**.
@@ -41,7 +41,7 @@ kras <- bioc2021trajectories::import_KRAS()
 kras <- kras[1:100, ]
 ```
 
-We rely on normalization conducted in the original paper, and will used the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object. 
+We rely on normalization conducted in the original paper, and will use the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object. 
 
 ```{r}
 data("kras", package = "bioc2021trajectories")
@@ -78,9 +78,9 @@ ggplot(df, aes(x = tSNE1, y = tSNE2, fill = Cluster)) +
 
 # Differential Topology
 
-The first question we ask is whether we can fit a common trajectory. If the differences between the models are limited, then a common trajectory is possible. If there are large changes, then it is better to fit one trajectory per tumor model. In that latter case, depending on the scale of those changes, it may still be possible to reconcile the trajectories manually.
+The first question we ask is whether we can fit a common trajectory. If the differences between the models are limited, then a common trajectory is possible. If there are large changes, then it is better to fit one trajectory per tumor model. In the latter case, depending on the scale of those changes, it may still be possible to reconcile the trajectories manually.
 
-To assess this, we first use a visual tool called the _imbalance_score_
+To assess this, we first use a visual tool called the _imbalance_score_.
 
 ## Imbalance score
 
@@ -115,7 +115,7 @@ ggplot(df, aes(x = tSNE1, y = tSNE2)) +
   geom_path(size = 1.5, data = mst, aes(group = Lineage))
 ```
 
-The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The _topologyTest_ utilizes this tree structure when fitting curves to the cells of each conditions, as well as random sets of the data, and compare whether the two distributions are similar.
+The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The _topologyTest_ utilizes this tree structure when fitting curves to the cells of each condition, as well as to random sets of the data, and compares whether the two distributions are similar.
 
 ## Topology Test
 
@@ -127,6 +127,7 @@ topologyTest(kras, conditions = "Batch", rep = 50)
 Here, we clearly reject the _topologyTest_: we should fit a separate trajectory per condition. 
 
 ## Individual curves
+
 ### Fit
 
 We therefore fit one trajectory per tumor model, or batch, using the _slingshot_conditions_ function. 
@@ -235,7 +236,7 @@ progressionTest(sds, conditions = kras$Batch, lineages = TRUE)
 
 Each cell in a trajectory is characterized with two components: its pseudotime values in each lineage, and its weights with regard to each lineage. Differential progression looks at the distribution of pseudotime between conditions while differential differentiation looks at the distribution of weights values between conditions. 
 
-It is slightly harder to interpret bu we can start with a few plots.
+It is slightly harder to interpret but we can start with a few plots.
 
 ## Plot
 
