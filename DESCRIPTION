@@ -1,5 +1,5 @@
 Package: bioc2021trajectories
-Title: Trajectory inference across conditions: differential expression and differential progression
+Title: Trajectory inference across conditions: differential topology, progression and expression
 Version: 0.0.21
 Authors@R: c(person("Kelly", "Street", role = c("aut"),
                      email = "kstreet@ds.dfci.harvard.edu"),

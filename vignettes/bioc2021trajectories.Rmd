@@ -1,5 +1,5 @@
 ---
-title: "Trajectory inference across conditions"
+title: "Trajectory inference across conditions: overview"
 output:
   rmarkdown::html_document:
     highlight: pygments
@@ -28,9 +28,9 @@ Many methods have been suggested for trajectory inference. However, in this sett
 
 In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We will expand on our recent package [condiments](https://bioconductor.org/packages/devel/bioc/html/condiments.html) and present the workflow on two examples. 
 
-We will first present a _single-lineage trajectory dataset with two conditions_ which we call **TGFB**, and conduct a full workflow analysis on that dataset, from integration to differential expression. You can find the compiled version of that vignette [here]().
++ We will first present a _single-lineage trajectory dataset with two conditions_ which we call **TGFB**, and conduct a full workflow analysis on that dataset, from integration to differential expression. You can find the compiled version of that vignette [here](https://hectorrdb.github.io/bioc2021trajectories/articles/TGFB.html).
 
-+ We will then analyze a more complex dataset, with _three lineages and three conditions_, which we name **KRAS** and explore how the first few steps of the workflow differ. You can find the compiled version of that vignette [here]().
++ We will then analyze a more complex dataset, with _three lineages and three conditions_, which we name **KRAS** and explore how the first few steps of the workflow differ. You can find the compiled version of that vignette [here](https://hectorrdb.github.io/bioc2021trajectories/articles/KRAS.html).
 
 
 ## Pre-requisites
