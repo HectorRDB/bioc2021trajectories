@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bioc2021trajectories</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.21</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/HectorRDB/bioc2021trajectories">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -92,28 +92,35 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="trajectory-inference-across-conditions-differential-expression-and-differential-progression" class="section level1">
+<div id="trajectory-inference-across-conditions-differential-topology-progression-and-expression" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#trajectory-inference-across-conditions-differential-expression-and-differential-progression" class="anchor"></a>Trajectory inference across conditions: differential expression and differential progression</h1></div>
+<a href="#trajectory-inference-across-conditions-differential-topology-progression-and-expression" class="anchor"></a>Trajectory inference across conditions: differential topology, progression and expression</h1></div>
 
 <p><img src="reference/figures/logo.png" align="right" height="138.5"></p>
 </div>
-<div id="instructors" class="section level1">
+<div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#instructors" class="anchor"></a>Instructors</h1>
+<a href="#overview" class="anchor"></a>Overview</h1>
+<div id="instructors-names-and-contact-information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#instructors-names-and-contact-information" class="anchor"></a>Instructor(s) name(s) and contact information</h2>
 <ul>
+<li>Hector Roux de Bézieux (<a href="mailto:hector.rouxdebezieux@berkeley.edu" class="email">hector.rouxdebezieux@berkeley.edu</a>)</li>
 <li>Kelly Street (<a href="mailto:kstreet@ds.dfci.harvard.edu" class="email">kstreet@ds.dfci.harvard.edu</a>)</li>
 <li>Koen Van den Berge (<a href="mailto:koenvdberge@berkeley.edu" class="email">koenvdberge@berkeley.edu</a>)</li>
-<li>Hector Roux de Bézieux (<a href="mailto:hector.rouxdebezieux@berkeley.edu" class="email">hector.rouxdebezieux@berkeley.edu</a>)</li>
 </ul>
 </div>
-<div id="workshop-description" class="section level1">
-<h1 class="hasAnchor">
-<a href="#workshop-description" class="anchor"></a>Workshop Description</h1>
-<p>In single-cell RNA-sequencing (scRNA-seq), gene expression is assessed at the level of single cells. In dynamic biological systems, it may not be appropriate to assign cells to discrete groups, but rather a continuum of cell states may be observed, e.g. the differentiation of a stem cell population into mature cell types. This is often represented as a trajectory in reduced dimension.</p>
+<div id="workshop-description" class="section level2">
+<h2 class="hasAnchor">
+<a href="#workshop-description" class="anchor"></a>Workshop Description</h2>
+<p>In single-cell RNA-sequencing (scRNA-seq), gene expression is assessed at the level of single cells. In dynamic biological systems, it may not be appropriate to assign cells to discrete groups, but rather a continuum of cell states may be observed, e.g. the differentiation of a stem cell population into mature cell types. This is often represented as a trajectory in a reduced dimension of the scRNA-seq dataset.</p>
 <p>Many methods have been suggested for trajectory inference. However, in this setting, it is often unclear how one should handle multiple biological groups or conditions, e.g. constructing and comparing the differentiation trajectory of a wild type versus a knock-out stem cell population.</p>
-<p>In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We start by integrating datasets from multiple conditions into a single trajectory. By comparing the conditions along the trajectory’s path, we can detect large-scale changes, indicative of differential progression. We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path.</p>
-<p><a href="https://bioconductor.org/packages/release/bioc/vignettes/slingshot/inst/doc/conditionsVignette.html">This vignette</a> provides a more complete problem description and proposes a few analytical approaches, which will serve as the basis of our workshop.</p>
+<p>In this workshop, we will explore methods for comparing multiple conditions in a trajectory inference analysis. We will expand on our recent package <a href="https://bioconductor.org/packages/devel/bioc/html/condiments.html">condiments</a> and present the workflow on two examples.</p>
+<p>We will first present a <em>single-lineage trajectory dataset with two conditions</em> which we call <strong>TGFB</strong>, and conduct a full workflow analysis on that dataset, from integration to differential expression. You can find the compiled version of that vignette <a href="https://hectorrdb.github.io/bioc2021trajectories/articles/TGFB.html">here</a>.</p>
+<ul>
+<li>We will then analyze a more complex dataset, with <em>three lineages and three conditions</em>, which we name <strong>KRAS</strong> and explore how the first few steps of the workflow differ. You can find the compiled version of that vignette <a href="https://hectorrdb.github.io/bioc2021trajectories/articles/KRAS.html">here</a>.</li>
+</ul>
+</div>
 <div id="pre-requisites" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pre-requisites" class="anchor"></a>Pre-requisites</h2>
@@ -126,6 +133,8 @@
 <p>Background reading:</p>
 <ul>
 <li>The textbook “Orchestrating Single-Cell Analysis with Bioconductor” is a great reference for single-cell analysis using Bioconductor packages.</li>
+<li>The first dataset used in this workshop was originally published in <a href="https://www.nature.com/articles/s41588-019-0489-5">McFaline-Figueroa, et al.</a> “A pooled single-cell genetic screen identifies regulatory checkpoints in the continuum of the epithelial-to-mesenchymal transition.”</li>
+<li>The second dataset used in this workshop in <a href="https://doi.org/10.1038/s41586-019-1884-x">Xue, et al.</a> “Rapid non-uniform adaptation to conformation-specific KRAS(G12C) inhibition”</li>
 <li><a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4772-0">Slingshot paper</a></li>
 <li><a href="https://www.nature.com/articles/s41467-020-14766-3">tradeSeq paper</a></li>
 <li><a href="https://www.biorxiv.org/content/10.1101/2021.03.09.433671v1">condiments paper</a></li>
@@ -134,18 +143,17 @@
 <div id="workshop-participation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workshop-participation" class="anchor"></a>Workshop Participation</h2>
-<p>The workshop will start with an introduction to the problem and the dataset using presentation slides. Following this, we will have a lab session on how one may tackle the problem of handling multiple conditions in trajectory inference and in downstream analysis involving differential progression and differential expression.</p>
+<p>The workshop will start with an introduction to the problem and the first dataset using <a href="">presentation slides</a>. Following this, we will have a <a href="https://hectorrdb.github.io/bioc2021trajectories/articles/TGFB.html">lab session on the first dataset</a>. Time permitting, we will then look at <a href="https://hectorrdb.github.io/bioc2021trajectories/articles/KRAS.html">a second dataset</a>.</p>
 </div>
 <div id="r--bioconductor-packages-used" class="section level2">
 <h2 class="hasAnchor">
 <a href="#r--bioconductor-packages-used" class="anchor"></a><em>R</em> / <em>Bioconductor</em> packages used</h2>
 <ul>
-<li>The workshop will focus on Bioconductor packages <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html">SingleCellExperiment</a>, <a href="https://bioconductor.org/packages/release/bioc/html/slingshot.html">Slingshot</a>, <a href="https://bioconductor.org/packages/release/bioc/html/tradeSeq.html">tradeSeq</a> and <a href="https://bioconductor.org/packages/release/bioc/html/condiments.html">condiments</a>.</li>
+<li>The workshop will focus on Bioconductor packages <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html">SingleCellExperiment</a>, <a href="https://bioconductor.org/packages/release/bioc/html/slingshot.html">Slingshot</a>, <a href="https://bioconductor.org/packages/release/bioc/html/tradeSeq.html">tradeSeq</a> and <a href="https://bioconductor.org/packages/devel/bioc/html/condiments.html">condiments</a>.</li>
 </ul>
-</div>
-<div id="time-outline" class="section level2">
-<h2 class="hasAnchor">
-<a href="#time-outline" class="anchor"></a>Time outline</h2>
+<div id="time-outline" class="section level3">
+<h3 class="hasAnchor">
+<a href="#time-outline" class="anchor"></a>Time outline</h3>
 <table class="table">
 <thead><tr class="header">
 <th>Activity</th>
@@ -154,21 +162,33 @@
 <tbody>
 <tr class="odd">
 <td>Introduction</td>
-<td>15m</td>
+<td>10m</td>
 </tr>
 <tr class="even">
-<td>Data Integration and Trajectory Inference</td>
+<td>TGFB: Data Integration</td>
+<td>5m</td>
+</tr>
+<tr class="odd">
+<td>TGFB: Trajectory Inference and Differential Topology</td>
+<td>10m</td>
+</tr>
+<tr class="even">
+<td>TGFB: Differential Progression</td>
+<td>5m</td>
+</tr>
+<tr class="odd">
+<td>TGFB: Differential Expression</td>
+<td>10m</td>
+</tr>
+<tr class="even">
+<td>KRAS: Trajectory Inference and Differential Topology</td>
 <td>10m</td>
 </tr>
 <tr class="odd">
-<td>Differential Progression</td>
-<td>15m</td>
+<td>KRAS: Differential Progression and Differentiation</td>
+<td>5m</td>
 </tr>
 <tr class="even">
-<td>Differential Expression</td>
-<td>15m</td>
-</tr>
-<tr class="odd">
 <td>Wrap-up and Conclusions</td>
 <td>5m</td>
 </tr>
@@ -176,10 +196,17 @@
 </table>
 </div>
 </div>
-<div id="workshop-goals-and-objectives" class="section level1">
-<h1 class="hasAnchor">
-<a href="#workshop-goals-and-objectives" class="anchor"></a>Workshop goals and objectives</h1>
-<p>Participants will learn how to reason about trajectories in single-cell RNA-seq data and how they may be used for interpretation of complex scRNA-seq datasets.</p>
+<div id="workshop-goals-and-objectives" class="section level2">
+<h2 class="hasAnchor">
+<a href="#workshop-goals-and-objectives" class="anchor"></a>Workshop goals and objectives</h2>
+<p>Participants will learn how to reason about trajectories in single-cell RNA-seq data and how they may be used for interpretation of complex scRNA-seq datasets. Participants can follow along in the following fashions:</p>
+<ul>
+<li>Run the code online by going to <a href="http://app.orchestra.cancerdatasci.org/1">orchestra</a> and launching the workshop titled <strong>Trajectory inference across conditions: differential expression and differential progression</strong>
+</li>
+<li>Clone the <a href="https://github.com/hectorrdb/bioc2021trajectories">repository</a> from github and run the code locally</li>
+<li>USe docker and get the container hectorrdb/bioc2021trajectories:latest</li>
+</ul>
+</div>
 <div id="learning-goals" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learning-goals" class="anchor"></a>Learning goals</h2>
@@ -201,6 +228,12 @@
 <li>Discuss how the analysis pipeline can incorporate this change and evaluate it.</li>
 </ul>
 </div>
+</div>
+<div id="final-notes" class="section level1">
+<h1 class="hasAnchor">
+<a href="#final-notes" class="anchor"></a>Final notes</h1>
+<p>A compiled version of the vignette is available on the <a href="https://hectorrdb.github.io/bioc2021trajectories/articles/bioc2021trajectories.html">workshop website</a>.</p>
+<p>If you have questions that you could not ask during the workshop, feel free to open an issue on the github repository <a href="https://github.com/hectorrdb/bioc2021trajectories/issues">here</a>.</p>
 </div>
 
   </div>

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bioc2021trajectories</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.21</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/HectorRDB/bioc2021trajectories">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -89,7 +89,7 @@
 
       
 
-      </header><script src="KRAS_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="KRAS_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Second example: KRAS dataset</h1>
@@ -107,7 +107,7 @@
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
 <p>The dataset we will be working with concerns a single-cell RNA-sequencing dataset consisting of three cancer models under a KRAS(G12C) inhibition <span class="citation">(Xue et al. 2020)</span>. Those types of molecules are currently in early-phase clinical trials and a large group of lung adenocarcinoma seem to be able to at least partially evade those treatments. The authors of the original study therefore look at the impact of KRAS(G12C) inhibitors on three models of tumors and show that cells evolve along three lineages.</p>
-<p>While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three models).</p>
+<p>While the authors used the three models to validate their results, we can also look for differences between the three types. We therefore have a three-lineages trajectory, with three conditions (i.e. the three tumor models).</p>
 <p>We will use this dataset as an example of how to perform the first two steps of the condiments workflow under this setting. + We first check if we can fit a single trajectory, which we call <strong>differential topology</strong>. + We then look for large-scale changes, indicative of <strong>differential progression</strong> and <strong>differential differentiation</strong>.</p>
 </div>
 <div id="load-data" class="section level1">
@@ -134,7 +134,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kras</span> <span class="op">&lt;-</span> <span class="fu">bioc2021trajectories</span><span class="fu">::</span><span class="fu"><a href="../reference/import_KRAS.html">import_KRAS</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">kras</span> <span class="op">&lt;-</span> <span class="va">kras</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></code></pre></div>
-<p>We rely on normalization conducted in the original paper, and will used the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object.</p>
+<p>We rely on normalization conducted in the original paper, and will use the reduced dimension coordinates that are available. We provide a function to access both the raw counts, the reduced dimension coordinates and other cell-level info. Since we will not be performing differential expression, we do not need to retain the genes and we only keep a lightweight version of the object.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"kras"</span>, package <span class="op">=</span> <span class="st">"bioc2021trajectories"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -179,8 +179,8 @@
 <div id="differential-topology" class="section level1">
 <h1 class="hasAnchor">
 <a href="#differential-topology" class="anchor"></a>Differential Topology</h1>
-<p>The first question we ask is whether we can fit a common trajectory. If the differences between the models are limited, then a common trajectory is possible. If there are large changes, then it is better to fit one trajectory per tumor model. In that latter case, depending on the scale of those changes, it may still be possible to reconcile the trajectories manually.</p>
-<p>To assess this, we first use a visual tool called the <em>imbalance_score</em></p>
+<p>The first question we ask is whether we can fit a common trajectory. If the differences between the models are limited, then a common trajectory is possible. If there are large changes, then it is better to fit one trajectory per tumor model. In the latter case, depending on the scale of those changes, it may still be possible to reconcile the trajectories manually.</p>
+<p>To assess this, we first use a visual tool called the <em>imbalance_score</em>.</p>
 <div id="imbalance-score" class="section level2">
 <h2 class="hasAnchor">
 <a href="#imbalance-score" class="anchor"></a>Imbalance score</h2>
@@ -211,7 +211,7 @@
   <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, data <span class="op">=</span> <span class="va">mst</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_path</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span>, data <span class="op">=</span> <span class="va">mst</span>, <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">Lineage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="KRAS_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The <em>topologyTest</em> utilizes this tree structure when fitting curves to the cells of each conditions, as well as random sets of the data, and compare whether the two distributions are similar.</p>
+<p>The skeleton of the trajectory is this tree structure, that tracks changes, consistently with the original publication. The <em>topologyTest</em> utilizes this tree structure when fitting curves to the cells of each condition, as well as to random sets of the data, and compares whether the two distributions are similar.</p>
 </div>
 <div id="topology-test" class="section level2">
 <h2 class="hasAnchor">
@@ -320,6 +320,8 @@
   <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Pseudotime"</span>, fill <span class="op">=</span> <span class="st">"Type"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">Curve</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## "none")` instead.</code></pre>
 <pre><code>## Warning: Removed 13000 rows containing non-finite values (stat_density).
 
 ## Warning: Removed 13000 rows containing non-finite values (stat_density).</code></pre>
@@ -336,7 +338,7 @@
 <a href="#test" class="anchor"></a>Test</h2>
 <p>We can also test this in a more principled manner using the <em>progressionTest</em>. Since we have three conditions, we perform a classifier test (see <span class="citation">(Lopez-Paz and Oquab 2016)</span>). By setting <code>lineages=TRUE</code>, we perform the test for individual lineages and for the full trajectory.</p>
 <p>The test statistic reflects the accuracy of the classifier on a balanced test data, so under the null, the expected value is <span class="math inline">\(1/3\)</span>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">progressionTest</span><span class="op">(</span><span class="va">sds</span>, conditions <span class="op">=</span> <span class="va">kras</span><span class="op">$</span><span class="va">Batch</span>, lineages <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>##   lineage statistic      p.value
 ## 1     All 0.8296334 0.000000e+00
@@ -349,11 +351,11 @@
 <h1 class="hasAnchor">
 <a href="#differential-differentiation" class="anchor"></a>Differential Differentiation</h1>
 <p>Each cell in a trajectory is characterized with two components: its pseudotime values in each lineage, and its weights with regard to each lineage. Differential progression looks at the distribution of pseudotime between conditions while differential differentiation looks at the distribution of weights values between conditions.</p>
-<p>It is slightly harder to interpret bu we can start with a few plots.</p>
+<p>It is slightly harder to interpret but we can start with a few plots.</p>
 <div id="plot-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-1" class="anchor"></a>Plot</h2>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">bioc2021trajectories</span><span class="fu">::</span><span class="fu"><a href="../reference/sling_reassign.html">sling_reassign</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -368,7 +370,7 @@
 <pre><code>## Setting options('GEOquery.inmemory.gpl'=FALSE)</code></pre>
 <pre><code>## Joining, by = c("cells", "Curve")</code></pre>
 <p>We can first look at the total weight of each lineage in each condition. Two clear conclusions can be drawn here: + Lineage 1, the longest lineage, indeed captures more cells in all lineages + There are fewer H2122A cells in lineage 2, compared to the other conditions.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">Batch</span>, <span class="va">Curve</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">summarise</span><span class="op">(</span>weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Curve</span>, fill <span class="op">=</span> <span class="va">Batch</span>, y <span class="op">=</span> <span class="va">weights</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -378,7 +380,7 @@
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Mean weight"</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'Batch'. You can override using the `.groups` argument.</code></pre>
 <p><img src="KRAS_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="st">"Curve"</span>, values_from <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Lineage1</span>, y <span class="op">=</span> <span class="va">Lineage3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_hex</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -398,7 +400,7 @@
 <div id="test-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#test-1" class="anchor"></a>Test</h2>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">differentiationTest</span><span class="op">(</span><span class="va">sds</span>, conditions <span class="op">=</span> <span class="va">kras</span><span class="op">$</span><span class="va">Batch</span>, pairwise <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## note: only 1 unique complexity parameters in default grid. Truncating the grid to 1 .
 ## 
@@ -417,7 +419,7 @@
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## R version 4.1.0 (2021-05-18)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -435,95 +437,88 @@
 ## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
-## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
+## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
 ##  [1] caret_6.0-88                lattice_0.20-44            
-##  [3] ggplot2_3.3.3               tidyr_1.1.3                
+##  [3] ggplot2_3.3.5               tidyr_1.1.3                
 ##  [5] cowplot_1.1.1               pheatmap_1.0.12            
 ##  [7] RColorBrewer_1.1-2          condiments_1.1.02          
 ##  [9] slingshot_2.1.0             TrajectoryUtils_1.1.0      
 ## [11] princurve_2.1.6             SingleCellExperiment_1.15.1
-## [13] SummarizedExperiment_1.23.0 Biobase_2.53.0             
-## [15] GenomicRanges_1.45.0        GenomeInfoDb_1.29.0        
+## [13] SummarizedExperiment_1.23.1 Biobase_2.53.0             
+## [15] GenomicRanges_1.45.0        GenomeInfoDb_1.29.3        
 ## [17] IRanges_2.27.0              S4Vectors_0.31.0           
-## [19] BiocGenerics_0.39.0         MatrixGenerics_1.5.0       
-## [21] matrixStats_0.59.0          tradeSeq_1.7.01            
-## [23] dplyr_1.0.6                
+## [19] BiocGenerics_0.39.1         MatrixGenerics_1.5.1       
+## [21] matrixStats_0.59.0          tradeSeq_1.7.03            
+## [23] dplyr_1.0.7                
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] utf8_1.2.1                 R.utils_2.10.1            
-##   [3] tidyselect_1.1.1           grid_4.1.0                
-##   [5] combinat_0.0-8             docopt_0.7.1              
-##   [7] BiocParallel_1.27.0        Rtsne_0.15                
-##   [9] bioc2021trajectories_0.0.2 pROC_1.17.0.1             
-##  [11] DropletUtils_1.13.0        munsell_0.5.0             
-##  [13] codetools_0.2-18           ragg_1.1.2                
-##  [15] withr_2.4.2                colorspace_2.0-1          
-##  [17] fastICA_1.2-2              highr_0.9                 
-##  [19] knitr_1.33                 tensor_1.5                
-##  [21] labeling_0.4.2             slam_0.1-48               
-##  [23] GenomeInfoDbData_1.2.6     polyclip_1.10-0           
-##  [25] farver_2.1.0               rhdf5_2.37.0              
-##  [27] rprojroot_2.0.2            vctrs_0.3.8               
-##  [29] generics_0.1.0             ipred_0.9-11              
-##  [31] xfun_0.23                  Ecume_0.9.1               
-##  [33] randomForest_4.6-14        R6_2.5.0                  
-##  [35] VGAM_1.1-5                 locfit_1.5-9.4            
-##  [37] bitops_1.0-7               rhdf5filters_1.5.0        
-##  [39] spatstat.utils_2.1-0       cachem_1.0.5              
-##  [41] DelayedArray_0.19.0        scales_1.1.1              
-##  [43] nnet_7.3-16                gtable_0.3.0              
-##  [45] beachmat_2.9.0             goftest_1.2-2             
-##  [47] timeDate_3043.102          rlang_0.4.11              
-##  [49] systemfonts_1.0.2          splines_4.1.0             
-##  [51] ModelMetrics_1.2.2.2       GEOquery_2.61.0           
-##  [53] hexbin_1.28.2              spatstat.geom_2.1-0       
-##  [55] yaml_2.2.1                 reshape2_1.4.4            
-##  [57] abind_1.4-5                tools_4.1.0               
-##  [59] lava_1.6.9                 ellipsis_0.3.2            
-##  [61] spatstat.core_2.1-2        proxy_0.4-25              
-##  [63] Rcpp_1.0.6                 plyr_1.8.6                
-##  [65] sparseMatrixStats_1.5.0    zlibbioc_1.39.0           
-##  [67] purrr_0.3.4                RCurl_1.98-1.3            
-##  [69] densityClust_0.3           rpart_4.1-15              
-##  [71] deldir_0.2-10              pbapply_1.4-3             
-##  [73] viridis_0.6.1              ggrepel_0.9.1             
-##  [75] cluster_2.1.2              fs_1.5.0                  
-##  [77] magrittr_2.0.1             data.table_1.14.0         
-##  [79] openxlsx_4.2.3             RANN_2.6.1                
-##  [81] hms_1.1.0                  evaluate_0.14             
-##  [83] sparsesvd_0.2              gridExtra_2.3             
-##  [85] HSMMSingleCell_1.13.0      compiler_4.1.0            
-##  [87] transport_0.12-2           tibble_3.1.2              
-##  [89] crayon_1.4.1               R.oo_1.24.0               
-##  [91] htmltools_0.5.1.1          mgcv_1.8-35               
-##  [93] lubridate_1.7.10           MASS_7.3-54               
-##  [95] Matrix_1.3-3               readr_1.4.0               
-##  [97] R.methodsS3_1.8.1          gower_0.2.2               
-##  [99] igraph_1.2.6               pkgconfig_2.0.3           
-## [101] pkgdown_1.6.1              scuttle_1.3.0             
-## [103] spatstat.sparse_2.0-0      recipes_0.1.16            
-## [105] xml2_1.3.2                 foreach_1.5.1             
-## [107] dqrng_0.3.0                XVector_0.33.0            
-## [109] prodlim_2019.11.13         stringr_1.4.0             
-## [111] digest_0.6.27              DDRTree_0.1.5             
-## [113] spatstat.data_2.1-0        rmarkdown_2.8             
-## [115] edgeR_3.35.0               DelayedMatrixStats_1.15.0 
-## [117] kernlab_0.9-29             lifecycle_1.0.0           
-## [119] monocle_2.21.0             nlme_3.1-152              
-## [121] Rhdf5lib_1.15.0            desc_1.3.0                
-## [123] viridisLite_0.4.0          limma_3.49.0              
-## [125] fansi_0.5.0                pillar_1.6.1              
-## [127] spatstat.linnet_2.1-1      fastmap_1.1.0             
-## [129] survival_3.2-11            glue_1.4.2                
-## [131] qlcMatrix_0.9.7            zip_2.2.0                 
-## [133] FNN_1.1.3                  spatstat_2.1-0            
-## [135] iterators_1.0.13           class_7.3-19              
-## [137] stringi_1.6.2              HDF5Array_1.21.0          
-## [139] textshaping_0.3.4          memoise_2.0.0             
-## [141] irlba_2.3.3                e1071_1.7-7</code></pre>
+##   [1] systemfonts_1.0.2           plyr_1.8.6                 
+##   [3] igraph_1.2.6                splines_4.1.0              
+##   [5] BiocParallel_1.27.0         bioc2021trajectories_0.0.21
+##   [7] digest_0.6.27               foreach_1.5.1              
+##   [9] htmltools_0.5.1.1           viridis_0.6.1              
+##  [11] fansi_0.5.0                 magrittr_2.0.1             
+##  [13] memoise_2.0.0               tensor_1.5                 
+##  [15] openxlsx_4.2.4              limma_3.49.1               
+##  [17] readr_1.4.0                 recipes_0.1.16             
+##  [19] gower_0.2.2                 R.utils_2.10.1             
+##  [21] pkgdown_1.6.1               spatstat.sparse_2.0-0      
+##  [23] colorspace_2.0-2            textshaping_0.3.5          
+##  [25] xfun_0.24                   hexbin_1.28.2              
+##  [27] crayon_1.4.1                RCurl_1.98-1.3             
+##  [29] spatstat_2.2-0              spatstat.data_2.1-0        
+##  [31] GEOquery_2.61.0             survival_3.2-11            
+##  [33] iterators_1.0.13            glue_1.4.2                 
+##  [35] polyclip_1.10-0             gtable_0.3.0               
+##  [37] ipred_0.9-11                zlibbioc_1.39.0            
+##  [39] XVector_0.33.0              DelayedArray_0.19.1        
+##  [41] Ecume_0.9.1                 kernlab_0.9-29             
+##  [43] Rhdf5lib_1.15.2             DropletUtils_1.13.1        
+##  [45] HDF5Array_1.21.0            abind_1.4-5                
+##  [47] scales_1.1.1                edgeR_3.35.0               
+##  [49] Rcpp_1.0.6                  viridisLite_0.4.0          
+##  [51] dqrng_0.3.0                 spatstat.core_2.2-0        
+##  [53] proxy_0.4-26                lava_1.6.9                 
+##  [55] prodlim_2019.11.13          ellipsis_0.3.2             
+##  [57] scuttle_1.3.0               R.methodsS3_1.8.1          
+##  [59] pkgconfig_2.0.3             farver_2.1.0               
+##  [61] nnet_7.3-16                 deldir_0.2-10              
+##  [63] locfit_1.5-9.4              utf8_1.2.1                 
+##  [65] tidyselect_1.1.1            labeling_0.4.2             
+##  [67] rlang_0.4.11                reshape2_1.4.4             
+##  [69] munsell_0.5.0               tools_4.1.0                
+##  [71] cachem_1.0.5                generics_0.1.0             
+##  [73] evaluate_0.14               stringr_1.4.0              
+##  [75] fastmap_1.1.0               yaml_2.2.1                 
+##  [77] ragg_1.1.3                  goftest_1.2-2              
+##  [79] ModelMetrics_1.2.2.2        transport_0.12-2           
+##  [81] knitr_1.33                  fs_1.5.0                   
+##  [83] zip_2.2.0                   randomForest_4.6-14        
+##  [85] purrr_0.3.4                 RANN_2.6.1                 
+##  [87] pbapply_1.4-3               nlme_3.1-152               
+##  [89] sparseMatrixStats_1.5.0     R.oo_1.24.0                
+##  [91] xml2_1.3.2                  compiler_4.1.0             
+##  [93] e1071_1.7-7                 spatstat.utils_2.2-0       
+##  [95] spatstat.linnet_2.2-1       tibble_3.1.2               
+##  [97] stringi_1.6.2               highr_0.9                  
+##  [99] desc_1.3.0                  Matrix_1.3-4               
+## [101] vctrs_0.3.8                 pillar_1.6.1               
+## [103] lifecycle_1.0.0             rhdf5filters_1.5.0         
+## [105] spatstat.geom_2.2-0         data.table_1.14.0          
+## [107] bitops_1.0-7                R6_2.5.0                   
+## [109] gridExtra_2.3               codetools_0.2-18           
+## [111] MASS_7.3-54                 rhdf5_2.37.0               
+## [113] rprojroot_2.0.2             withr_2.4.2                
+## [115] GenomeInfoDbData_1.2.6      hms_1.1.0                  
+## [117] mgcv_1.8-36                 parallel_4.1.0             
+## [119] beachmat_2.9.0              grid_4.1.0                 
+## [121] rpart_4.1-15                timeDate_3043.102          
+## [123] class_7.3-19                rmarkdown_2.9              
+## [125] DelayedMatrixStats_1.15.0   pROC_1.17.0.1              
+## [127] lubridate_1.7.10</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

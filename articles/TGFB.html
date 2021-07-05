@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bioc2021trajectories</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.21</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/HectorRDB/bioc2021trajectories">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -89,7 +89,7 @@
 
       
 
-      </header><script src="TGFB_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="TGFB_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>First example: TGF-beta dataset</h1>
@@ -112,7 +112,7 @@
 <span class="op">)</span></code></pre></div>
 <p>We will follow the 3-steps workflow of the <code>condiments</code> package:</p>
 <ul>
-<li>We start by integrating datasets from multiple conditions and then check that we can fit a single trajectory, which we call <strong>differential topology</strong>.</li>
+<li>We start by integrating datasets from multiple conditions and then check if we can fit a single trajectory, which we call <strong>differential topology</strong>.</li>
 <li>By comparing the conditions along the trajectory’s path, we can detect large-scale changes, indicative of <strong>differential progression</strong>.</li>
 <li>We also demonstrate how to detect subtler changes by finding genes that exhibit different behaviors between these conditions along a differentiation path, commonly known as <strong>differential expression</strong>.</li>
 </ul>
@@ -260,7 +260,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.7</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Spatial ID"</span>, col <span class="op">=</span> <span class="st">"Spatial ID"</span>, x <span class="op">=</span> <span class="st">"PSeudotime"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Spatial ID"</span>, col <span class="op">=</span> <span class="st">"Spatial ID"</span>, x <span class="op">=</span> <span class="st">"Pseudotime"</span><span class="op">)</span></code></pre></div>
 <p><img src="TGFB_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="differential-progression" class="section level2">
@@ -420,104 +420,104 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">GOBP_EPIDERMIS_DEVELOPMENT</td>
-<td align="right">0.00006</td>
-<td align="right">0.0773185</td>
+<td align="left">GOBP_CELL_CYCLE</td>
+<td align="right">0.00002</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="even">
-<td align="left">GOBP_CELL_CYCLE</td>
-<td align="right">0.00008</td>
-<td align="right">0.0773185</td>
+<td align="left">GOBP_EPITHELIAL_CELL_DIFFERENTIATION</td>
+<td align="right">0.00006</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_EPITHELIUM_DEVELOPMENT</td>
-<td align="right">0.00008</td>
-<td align="right">0.0773185</td>
+<td align="right">0.00006</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_MITOTIC_NUCLEAR_DIVISION</td>
 <td align="right">0.00008</td>
-<td align="right">0.0773185</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="odd">
-<td align="left">GOBP_EPITHELIAL_CELL_DIFFERENTIATION</td>
-<td align="right">0.00014</td>
-<td align="right">0.0902049</td>
-</tr>
-<tr class="even">
 <td align="left">GOBP_NEGATIVE_REGULATION_OF_CELLULAR_COMPONENT_ORGANIZATION</td>
-<td align="right">0.00014</td>
-<td align="right">0.0902049</td>
-</tr>
-<tr class="odd">
-<td align="left">GOBP_MITOTIC_CELL_CYCLE</td>
-<td align="right">0.00018</td>
-<td align="right">0.0927821</td>
+<td align="right">0.00010</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_ORGANELLE_FISSION</td>
-<td align="right">0.00020</td>
-<td align="right">0.0927821</td>
+<td align="right">0.00010</td>
+<td align="right">0.0644320</td>
 </tr>
 <tr class="odd">
-<td align="left">GOBP_REGULATION_OF_CHROMOSOME_ORGANIZATION</td>
-<td align="right">0.00024</td>
-<td align="right">0.0927821</td>
+<td align="left">GOBP_EPIDERMIS_DEVELOPMENT</td>
+<td align="right">0.00014</td>
+<td align="right">0.0676536</td>
 </tr>
 <tr class="even">
-<td align="left">GOBP_SKIN_DEVELOPMENT</td>
-<td align="right">0.00024</td>
-<td align="right">0.0927821</td>
+<td align="left">GOBP_MITOTIC_CELL_CYCLE</td>
+<td align="right">0.00014</td>
+<td align="right">0.0676536</td>
 </tr>
 <tr class="odd">
-<td align="left">GOBP_EPIDERMAL_CELL_DIFFERENTIATION</td>
-<td align="right">0.00044</td>
-<td align="right">0.1546369</td>
+<td align="left">GOBP_SKIN_DEVELOPMENT</td>
+<td align="right">0.00020</td>
+<td align="right">0.0850503</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_CHROMOSOME_ORGANIZATION</td>
-<td align="right">0.00054</td>
-<td align="right">0.1605845</td>
+<td align="right">0.00022</td>
+<td align="right">0.0850503</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_PROTEOLYSIS</td>
-<td align="right">0.00054</td>
-<td align="right">0.1605845</td>
+<td align="right">0.00030</td>
+<td align="right">0.0966481</td>
+</tr>
+<tr class="even">
+<td align="left">GOBP_REGULATION_OF_CHROMOSOME_ORGANIZATION</td>
+<td align="right">0.00030</td>
+<td align="right">0.0966481</td>
+</tr>
+<tr class="odd">
+<td align="left">GOBP_CELL_CYCLE_PROCESS</td>
+<td align="right">0.00044</td>
+<td align="right">0.1308466</td>
+</tr>
+<tr class="even">
+<td align="left">GOBP_CHROMOSOME_SEGREGATION</td>
+<td align="right">0.00058</td>
+<td align="right">0.1494823</td>
+</tr>
+<tr class="odd">
+<td align="left">GOBP_EPIDERMAL_CELL_DIFFERENTIATION</td>
+<td align="right">0.00058</td>
+<td align="right">0.1494823</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_POSITIVE_REGULATION_OF_DENDRITE_MORPHOGENESIS</td>
-<td align="right">0.00062</td>
-<td align="right">0.1709145</td>
+<td align="right">0.00064</td>
+<td align="right">0.1546369</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_CELL_DIVISION</td>
 <td align="right">0.00074</td>
-<td align="right">0.1709145</td>
+<td align="right">0.1546369</td>
 </tr>
 <tr class="even">
-<td align="left">GOBP_CHROMOSOME_SEGREGATION</td>
-<td align="right">0.00076</td>
-<td align="right">0.1709145</td>
-</tr>
-<tr class="odd">
 <td align="left">GOBP_POSITIVE_REGULATION_OF_JUN_KINASE_ACTIVITY</td>
-<td align="right">0.00080</td>
-<td align="right">0.1709145</td>
-</tr>
-<tr class="even">
-<td align="left">GOBP_CELL_CYCLE_PROCESS</td>
-<td align="right">0.00082</td>
-<td align="right">0.1709145</td>
+<td align="right">0.00074</td>
+<td align="right">0.1546369</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_DEFENSE_RESPONSE_TO_OTHER_ORGANISM</td>
-<td align="right">0.00084</td>
-<td align="right">0.1709145</td>
+<td align="right">0.00078</td>
+<td align="right">0.1546369</td>
 </tr>
 <tr class="even">
-<td align="left">GOBP_KERATINOCYTE_DIFFERENTIATION</td>
-<td align="right">0.00090</td>
-<td align="right">0.1730461</td>
+<td align="left">GOBP_NEGATIVE_REGULATION_OF_ORGANELLE_ORGANIZATION</td>
+<td align="right">0.00084</td>
+<td align="right">0.1546369</td>
 </tr>
 </tbody>
 </table>
@@ -647,88 +647,88 @@
 </tr>
 <tr class="even">
 <td align="left">GOBP_ANATOMICAL_STRUCTURE_FORMATION_INVOLVED_IN_MORPHOGENESIS</td>
-<td align="right">0.0000600</td>
-<td align="right">0.0580638</td>
+<td align="right">0.0000400</td>
+<td align="right">0.0387092</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_REGULATION_OF_CELL_ADHESION</td>
-<td align="right">0.0002000</td>
-<td align="right">0.1419338</td>
+<td align="right">0.0001000</td>
+<td align="right">0.0774185</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_CELL_POPULATION_PROLIFERATION</td>
-<td align="right">0.0002200</td>
-<td align="right">0.1419338</td>
+<td align="right">0.0001400</td>
+<td align="right">0.0903215</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_REGULATION_OF_MITOCHONDRIAL_GENE_EXPRESSION</td>
-<td align="right">0.0004800</td>
-<td align="right">0.2654347</td>
+<td align="right">0.0004600</td>
+<td align="right">0.2543749</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_TRANSCRIPTION_BY_RNA_POLYMERASE_III</td>
-<td align="right">0.0005600</td>
-<td align="right">0.2709646</td>
-</tr>
-<tr class="odd">
-<td align="left">GOBP_EXTERNAL_ENCAPSULATING_STRUCTURE_ORGANIZATION</td>
-<td align="right">0.0007800</td>
-<td align="right">0.3354800</td>
-</tr>
-<tr class="even">
-<td align="left">GOBP_MITOCHONDRIAL_RNA_METABOLIC_PROCESS</td>
-<td align="right">0.0009000</td>
-<td align="right">0.3483830</td>
+<td align="right">0.0006400</td>
+<td align="right">0.3096738</td>
 </tr>
 <tr class="odd">
 <td align="left">GOBP_VASCULATURE_DEVELOPMENT</td>
-<td align="right">0.0010800</td>
-<td align="right">0.3539129</td>
+<td align="right">0.0008200</td>
+<td align="right">0.3225769</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_REGULATION_OF_CELLULAR_COMPONENT_MOVEMENT</td>
-<td align="right">0.0012800</td>
-<td align="right">0.3539129</td>
+<td align="right">0.0008800</td>
+<td align="right">0.3225769</td>
 </tr>
 <tr class="odd">
+<td align="left">GOBP_EXTERNAL_ENCAPSULATING_STRUCTURE_ORGANIZATION</td>
+<td align="right">0.0009200</td>
+<td align="right">0.3225769</td>
+</tr>
+<tr class="even">
 <td align="left">GOBP_TUBE_DEVELOPMENT</td>
-<td align="right">0.0013400</td>
-<td align="right">0.3539129</td>
-</tr>
-<tr class="even">
-<td align="left">GOBP_CIRCULATORY_SYSTEM_DEVELOPMENT</td>
-<td align="right">0.0014400</td>
-<td align="right">0.3539129</td>
+<td align="right">0.0010000</td>
+<td align="right">0.3225769</td>
 </tr>
 <tr class="odd">
-<td align="left">GOBP_N_TERMINAL_PROTEIN_AMINO_ACID_MODIFICATION</td>
-<td align="right">0.0014800</td>
-<td align="right">0.3539129</td>
-</tr>
-<tr class="even">
-<td align="left">GOBP_CELL_JUNCTION_ASSEMBLY</td>
-<td align="right">0.0015600</td>
-<td align="right">0.3539129</td>
-</tr>
-<tr class="odd">
-<td align="left">GOBP_MOTOR_NEURON_AXON_GUIDANCE</td>
-<td align="right">0.0016604</td>
-<td align="right">0.3539129</td>
-</tr>
-<tr class="even">
 <td align="left">GOBP_CELL_CELL_ADHESION</td>
-<td align="right">0.0017200</td>
-<td align="right">0.3539129</td>
+<td align="right">0.0012600</td>
+<td align="right">0.3303187</td>
+</tr>
+<tr class="even">
+<td align="left">GOBP_MITOCHONDRIAL_RNA_METABOLIC_PROCESS</td>
+<td align="right">0.0012600</td>
+<td align="right">0.3303187</td>
 </tr>
 <tr class="odd">
-<td align="left">GOBP_TAXIS</td>
-<td align="right">0.0017800</td>
-<td align="right">0.3539129</td>
+<td align="left">GOBP_CIRCULATORY_SYSTEM_DEVELOPMENT</td>
+<td align="right">0.0012800</td>
+<td align="right">0.3303187</td>
 </tr>
 <tr class="even">
 <td align="left">GOBP_BLOOD_VESSEL_MORPHOGENESIS</td>
-<td align="right">0.0019000</td>
-<td align="right">0.3539129</td>
+<td align="right">0.0014800</td>
+<td align="right">0.3381964</td>
+</tr>
+<tr class="odd">
+<td align="left">GOBP_N_TERMINAL_PROTEIN_AMINO_ACID_MODIFICATION</td>
+<td align="right">0.0015600</td>
+<td align="right">0.3381964</td>
+</tr>
+<tr class="even">
+<td align="left">GOBP_TAXIS</td>
+<td align="right">0.0015800</td>
+<td align="right">0.3381964</td>
+</tr>
+<tr class="odd">
+<td align="left">GOBP_CELL_JUNCTION_ASSEMBLY</td>
+<td align="right">0.0016600</td>
+<td align="right">0.3381964</td>
+</tr>
+<tr class="even">
+<td align="left">GOBP_MOTOR_NEURON_AXON_GUIDANCE</td>
+<td align="right">0.0018603</td>
+<td align="right">0.3465397</td>
 </tr>
 </tbody>
 </table>
@@ -758,88 +758,80 @@
 ## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
-## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
+## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
-##  [1] cowplot_1.1.1               tradeSeq_1.7.01            
-##  [3] gridExtra_2.3               ggplot2_3.3.3              
+##  [1] cowplot_1.1.1               tradeSeq_1.7.03            
+##  [3] gridExtra_2.3               ggplot2_3.3.5              
 ##  [5] fgsea_1.19.0                msigdbr_7.4.1              
 ##  [7] pheatmap_1.0.12             UpSetR_1.4.0               
 ##  [9] viridis_0.6.1               viridisLite_0.4.0          
 ## [11] scales_1.1.1                RColorBrewer_1.1-2         
-## [13] condiments_1.1.02           dplyr_1.0.6                
+## [13] condiments_1.1.02           dplyr_1.0.7                
 ## [15] slingshot_2.1.0             TrajectoryUtils_1.1.0      
-## [17] SingleCellExperiment_1.15.1 SummarizedExperiment_1.23.0
+## [17] SingleCellExperiment_1.15.1 SummarizedExperiment_1.23.1
 ## [19] Biobase_2.53.0              GenomicRanges_1.45.0       
-## [21] GenomeInfoDb_1.29.0         IRanges_2.27.0             
-## [23] S4Vectors_0.31.0            BiocGenerics_0.39.0        
-## [25] MatrixGenerics_1.5.0        matrixStats_0.59.0         
+## [21] GenomeInfoDb_1.29.3         IRanges_2.27.0             
+## [23] S4Vectors_0.31.0            BiocGenerics_0.39.1        
+## [25] MatrixGenerics_1.5.1        matrixStats_0.59.0         
 ## [27] princurve_2.1.6             knitr_1.33                 
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] fastmatch_1.1-0           VGAM_1.1-5               
-##   [3] systemfonts_1.0.2         plyr_1.8.6               
-##   [5] igraph_1.2.6              splines_4.1.0            
-##   [7] densityClust_0.3          BiocParallel_1.27.0      
-##   [9] fastICA_1.2-2             digest_0.6.27            
-##  [11] foreach_1.5.1             htmltools_0.5.1.1        
-##  [13] fansi_0.5.0               magrittr_2.0.1           
-##  [15] memoise_2.0.0             tensor_1.5               
-##  [17] cluster_2.1.2             limma_3.49.0             
-##  [19] recipes_0.1.16            gower_0.2.2              
-##  [21] docopt_0.7.1              pkgdown_1.6.1            
-##  [23] spatstat.sparse_2.0-0     colorspace_2.0-1         
-##  [25] ggrepel_0.9.1             textshaping_0.3.4        
-##  [27] xfun_0.23                 sparsesvd_0.2            
-##  [29] crayon_1.4.1              RCurl_1.98-1.3           
-##  [31] spatstat_2.1-0            spatstat.data_2.1-0      
-##  [33] survival_3.2-11           iterators_1.0.13         
-##  [35] glue_1.4.2                polyclip_1.10-0          
-##  [37] gtable_0.3.0              ipred_0.9-11             
-##  [39] zlibbioc_1.39.0           XVector_0.33.0           
-##  [41] DelayedArray_0.19.0       Ecume_0.9.1              
-##  [43] kernlab_0.9-29            abind_1.4-5              
-##  [45] edgeR_3.35.0              Rcpp_1.0.6               
-##  [47] spatstat.core_2.1-2       proxy_0.4-25             
-##  [49] lava_1.6.9                prodlim_2019.11.13       
-##  [51] FNN_1.1.3                 ellipsis_0.3.2           
-##  [53] farver_2.1.0              pkgconfig_2.0.3          
-##  [55] nnet_7.3-16               deldir_0.2-10            
-##  [57] locfit_1.5-9.4            utf8_1.2.1               
-##  [59] caret_6.0-88              labeling_0.4.2           
-##  [61] tidyselect_1.1.1          rlang_0.4.11             
-##  [63] reshape2_1.4.4            munsell_0.5.0            
-##  [65] tools_4.1.0               cachem_1.0.5             
-##  [67] cli_2.5.0                 generics_0.1.0           
-##  [69] evaluate_0.14             stringr_1.4.0            
-##  [71] fastmap_1.1.0             yaml_2.2.1               
-##  [73] ragg_1.1.2                goftest_1.2-2            
-##  [75] ModelMetrics_1.2.2.2      transport_0.12-2         
-##  [77] babelgene_21.4            fs_1.5.0                 
-##  [79] DDRTree_0.1.5             purrr_0.3.4              
-##  [81] RANN_2.6.1                sparseMatrixStats_1.5.0  
-##  [83] pbapply_1.4-3             nlme_3.1-152             
-##  [85] monocle_2.21.0            slam_0.1-48              
-##  [87] rstudioapi_0.13           compiler_4.1.0           
-##  [89] e1071_1.7-7               spatstat.utils_2.1-0     
-##  [91] spatstat.linnet_2.1-1     tibble_3.1.2             
-##  [93] stringi_1.6.2             ps_1.6.0                 
-##  [95] highr_0.9                 desc_1.3.0               
-##  [97] lattice_0.20-44           Matrix_1.3-3             
-##  [99] HSMMSingleCell_1.13.0     vctrs_0.3.8              
-## [101] pillar_1.6.1              lifecycle_1.0.0          
-## [103] combinat_0.0-8            spatstat.geom_2.1-0      
-## [105] data.table_1.14.0         bitops_1.0-7             
-## [107] irlba_2.3.3               R6_2.5.0                 
-## [109] codetools_0.2-18          MASS_7.3-54              
-## [111] rprojroot_2.0.2           withr_2.4.2              
-## [113] qlcMatrix_0.9.7           GenomeInfoDbData_1.2.6   
-## [115] mgcv_1.8-35               grid_4.1.0               
-## [117] rpart_4.1-15              timeDate_3043.102        
-## [119] class_7.3-19              DelayedMatrixStats_1.15.0
-## [121] rmarkdown_2.8             Rtsne_0.15               
-## [123] pROC_1.17.0.1             lubridate_1.7.10</code></pre>
+##   [1] fastmatch_1.1-0           systemfonts_1.0.2        
+##   [3] plyr_1.8.6                igraph_1.2.6             
+##   [5] splines_4.1.0             BiocParallel_1.27.0      
+##   [7] digest_0.6.27             foreach_1.5.1            
+##   [9] htmltools_0.5.1.1         fansi_0.5.0              
+##  [11] magrittr_2.0.1            memoise_2.0.0            
+##  [13] tensor_1.5                limma_3.49.1             
+##  [15] recipes_0.1.16            gower_0.2.2              
+##  [17] pkgdown_1.6.1             spatstat.sparse_2.0-0    
+##  [19] colorspace_2.0-2          textshaping_0.3.5        
+##  [21] xfun_0.24                 crayon_1.4.1             
+##  [23] RCurl_1.98-1.3            spatstat_2.2-0           
+##  [25] spatstat.data_2.1-0       survival_3.2-11          
+##  [27] iterators_1.0.13          glue_1.4.2               
+##  [29] polyclip_1.10-0           gtable_0.3.0             
+##  [31] ipred_0.9-11              zlibbioc_1.39.0          
+##  [33] XVector_0.33.0            DelayedArray_0.19.1      
+##  [35] Ecume_0.9.1               kernlab_0.9-29           
+##  [37] abind_1.4-5               edgeR_3.35.0             
+##  [39] Rcpp_1.0.6                spatstat.core_2.2-0      
+##  [41] proxy_0.4-26              lava_1.6.9               
+##  [43] prodlim_2019.11.13        ellipsis_0.3.2           
+##  [45] pkgconfig_2.0.3           farver_2.1.0             
+##  [47] nnet_7.3-16               deldir_0.2-10            
+##  [49] locfit_1.5-9.4            utf8_1.2.1               
+##  [51] caret_6.0-88              tidyselect_1.1.1         
+##  [53] labeling_0.4.2            rlang_0.4.11             
+##  [55] reshape2_1.4.4            munsell_0.5.0            
+##  [57] tools_4.1.0               cachem_1.0.5             
+##  [59] cli_3.0.0                 generics_0.1.0           
+##  [61] evaluate_0.14             stringr_1.4.0            
+##  [63] fastmap_1.1.0             yaml_2.2.1               
+##  [65] ragg_1.1.3                goftest_1.2-2            
+##  [67] ModelMetrics_1.2.2.2      transport_0.12-2         
+##  [69] babelgene_21.4            fs_1.5.0                 
+##  [71] purrr_0.3.4               RANN_2.6.1               
+##  [73] sparseMatrixStats_1.5.0   pbapply_1.4-3            
+##  [75] nlme_3.1-152              compiler_4.1.0           
+##  [77] e1071_1.7-7               spatstat.utils_2.2-0     
+##  [79] spatstat.linnet_2.2-1     tibble_3.1.2             
+##  [81] stringi_1.6.2             highr_0.9                
+##  [83] desc_1.3.0                lattice_0.20-44          
+##  [85] Matrix_1.3-4              vctrs_0.3.8              
+##  [87] pillar_1.6.1              lifecycle_1.0.0          
+##  [89] spatstat.geom_2.2-0       data.table_1.14.0        
+##  [91] bitops_1.0-7              R6_2.5.0                 
+##  [93] codetools_0.2-18          MASS_7.3-54              
+##  [95] rprojroot_2.0.2           withr_2.4.2              
+##  [97] GenomeInfoDbData_1.2.6    mgcv_1.8-36              
+##  [99] parallel_4.1.0            grid_4.1.0               
+## [101] rpart_4.1-15              timeDate_3043.102        
+## [103] class_7.3-19              rmarkdown_2.9            
+## [105] DelayedMatrixStats_1.15.0 pROC_1.17.0.1            
+## [107] lubridate_1.7.10</code></pre>
 </div>
   </div>
 
