@@ -231,10 +231,7 @@ Before we can fit these smoothed expression profiles, we need to get a sense of 
 
 ```{r evaluateK, eval = FALSE}
 set.seed(3)
-icMat <- evaluateK(counts = as.matrix(assays(tgfb)$counts),
-                   pseudotime = colData(tgfb)$slingshot$pseudotime,
-                   cellWeights = colData(tgfb)$slingshot$cellWeights.V1,
-                   conditions = factor(colData(tgfb)$pheno$treatment_id),
+icMat <- evaluateK(tgfb, conditions = factor(colData(tgfb)$treatment_id),
                    nGenes = 300,
                    k = 3:7)
 ```
