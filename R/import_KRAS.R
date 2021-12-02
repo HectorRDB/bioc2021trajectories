@@ -90,6 +90,7 @@ import_KRAS <- function() {
                                    filter_regex = "logcounts")
   raw_loc <- rownames(raw)
   logcounts <- readr::read_csv(raw_loc)
+  colnames(logcounts)[1] <- "X1"
   genes <- logcounts$X1
   logcounts <- logcounts[, -1]
   logcounts <- Matrix::Matrix(as.matrix(logcounts))
@@ -105,11 +106,12 @@ import_KRAS <- function() {
   url <- paste0("https://static-content.springer.com/esm/art%3A10.1038%2Fs41586",
                 "-019-1884-x/MediaObjects/41586_2019_1884_MOESM4_ESM.csv")
   celltype <- readr::read_csv(url(url))
+  colnames(celltype)[1] <- "X1"
   url <- paste0("https://static-content.springer.com/esm/art%3A10.1038%2Fs41586",
                 "-019-1884-x/MediaObjects/41586_2019_1884_MOESM6_ESM.csv")
   pst <- readr::read_csv(url(url))
-  colD <- full_join(celltype, pst, by = "X1") %>%
-    rename("cells" = "X1")
+  colnames(pst)[1] <- "X1"
+  colD <- full_join(celltype, pst, by = "X1")
   url <- paste0("https://static-content.springer.com/esm/art%3A10.1038%2Fs41586",
                 "-019-1884-x/MediaObjects/41586_2019_1884_MOESM13_ESM.xlsx")
   df <- openxlsx::read.xlsx(url, sheet = "Extended Data Fig. 2g, i")
@@ -119,7 +121,10 @@ import_KRAS <- function() {
   # Get gene metadata ----
   url <- paste0("https://static-content.springer.com/esm/art%3A10.1038%2Fs41586",
                 "-019-1884-x/MediaObjects/41586_2019_1884_MOESM5_ESM.csv")
-  genemeta <- readr::read_csv(url(url)) %>%
+  genemeta <- readr::read_csv(url(url))
+  colnames(genemeta)[1] <- "X1"
+  colnames(genemeta)[22] <- "X22"
+  genemeta <- genemeta %>%
     dplyr::select(-X1, -X22, -Description, -`Gene-level column names`)
   rownames(genemeta) <- genemeta$gene_short_name
   genemeta <- genemeta %>%
@@ -132,3 +137,4 @@ import_KRAS <- function() {
   reducedDim(sce, "TSNE") <- colData(sce)[, c("tSNE1", "tSNE2")] %>% as.matrix()
   return(sce)
 }
+
